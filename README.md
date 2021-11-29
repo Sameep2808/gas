@@ -38,6 +38,7 @@ The following proposal proposes a ROS package which simulates a pickup and place
 ## Algorithm
 
 ## Technology
+![Technology](https://user-images.githubusercontent.com/77606010/143795152-7f3a8ed7-512a-41bc-afca-2e7c10cc1f0e.png)
 
 Our robot’s technology is divided into two parts:
 Navigation and Object Identification: The aim of this aspect is
@@ -75,6 +76,7 @@ behaviour of the robot’s arm and can be avoided by regular
 maintenance of the robot.
 
 ## Organization
+![Organization](https://user-images.githubusercontent.com/77606010/143795159-a4084549-180b-4f31-a1b5-d834b7cb681c.png)
 
 The organization consists of a modest three programmer team.
 Every programmer will assume to be a process manager and
