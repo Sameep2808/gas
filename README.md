@@ -34,30 +34,27 @@ SOFTWARE.
 - Sprint Meeting Document - https://docs.google.com/document/d/13UunkO20LzQ7dAkEkqdN7CIHWwQ9Xm0ZXc96tBIPPL8/edit?usp=sharing
 ## Overview
 
-The following proposal proposes a ROS package which simulates a pickup and place robot in a custom made world which replicates a real world storehouse facility. The code name, ‘GAS’, comes after the initials of the project developers. The idea of our project comes from the concept of warehouse automation. The robot that we are proposing will autonomously find any random targeted object and collect it for the user. Such a robot can be used in a variety of commercial and logistics scenarios. For example, our robot can be deployed in an IKEA storehouse. Here, the robot willinput the customer’s receipt and autonomously find the items in the receipt and collect them by searching them in the warehouse. For doing this, the robot will use its camera to identify sections and items in the organised warehouse and collect them using its fork actuator and drop the items in the billing area. The robot also uses LiDAR to avoid any obstacle collision while navigating itself.
-
-## Algorithm
+The following proposal proposes a ROS package which simulates a pickup and place robot in a custom made world which replicates a real world storehouse facility. The code name, ‘GAS’, comes after the initials of the project developers. The idea of our project comes from the concept of warehouse automation. The robot that we are proposing will autonomously find any random targeted object and collect it for the user. Such a robot can be used in a variety of commercial and logistics scenarios. For example, our robot can be deployed in an IKEA storehouse. Here, the robot will input the customer’s receipt and autonomously find the items in the receipt and collect them by searching them in the warehouse. For doing this, the robot will localize itself and autonomously path a way towards the items in the organised warehouse and collect them using its fork actuator and drop the items in the billing area. For this, the robot uses LiDAR and also uses it to avoid any obstacle collision while navigating itself. The camera on robot is used to identify objects using HSV colour space.
 
 ## Technology
-![Technology](https://user-images.githubusercontent.com/77606010/143795152-7f3a8ed7-512a-41bc-afca-2e7c10cc1f0e.png)
+![Technology](https://user-images.githubusercontent.com/77606010/143810362-86c8a3c6-1070-4e19-949f-a3d171f37d05.png)
 
 Our robot’s technology is divided into two parts:
-Navigation and Object Identification: The aim of this aspect is
-to scan images to detect text using the OCR(Optical Character
-Recognition) module. Using this, the robot will navigate itself
-to find the targeted location.
-Obstacle Avoidance: LiDAR sensor is used to detect the
+
+- Navigation and Obstacle Avoidance: The aim of this aspect is
+to navigate the robot using LiDAR and localization. Using this, the robot will autonomously navigate itself
+to find the targeted location.LiDAR sensor is used to detect the
 robot’s surroundings. It creates a Laser scan map around the robot and using this generated map, decides to continue on its
-planned path or change its path. The aim of this module is to
-look for obstacles around the robot.
+planned path or change its path.
+
+- Object Identification: The camera on robot is used to identify objects using HSV colour space. Every object has an unique colour and the robot will identify the object based on it's colour and then call a rosservice to pick up the object.
 
 ## Dependencies and Technologies used
 
 - Programming language : C++
 - Build system : catkin_make
 - Operating System : Ubuntu 18.04/20.04
-- Libraries: OpenCV, Eigen, Math, mlpack, cv_bridge, moveit,
-- Tesseract OCR
+- Libraries: OpenCV, Eigen, cmath, mlpack, cv_bridge, moveit
 
 ## Risks and Mitigation
 
