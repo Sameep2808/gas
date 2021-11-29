@@ -30,7 +30,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ## AIP documents
-
+- Product and Iteration backlogs, Work logs - https://docs.google.com/spreadsheets/d/1KLyT2uEeI9b1TvwLfODoASXBfRGHRH0ggyx3o0lfnI0/edit?usp=sharing
+- Sprint Meeting Document - https://docs.google.com/document/d/13UunkO20LzQ7dAkEkqdN7CIHWwQ9Xm0ZXc96tBIPPL8/edit?usp=sharing
 ## Overview
 
 The following proposal proposes a ROS package which simulates a pickup and place robot in a custom made world which replicates a real world storehouse facility. The code name, ‘GAS’, comes after the initials of the project developers. The idea of our project comes from the concept of warehouse automation. The robot that we are proposing will autonomously find any random targeted object and collect it for the user. Such a robot can be used in a variety of commercial and logistics scenarios. For example, our robot can be deployed in an IKEA storehouse. Here, the robot willinput the customer’s receipt and autonomously find the items in the receipt and collect them by searching them in the warehouse. For doing this, the robot will use its camera to identify sections and items in the organised warehouse and collect them using its fork actuator and drop the items in the billing area. The robot also uses LiDAR to avoid any obstacle collision while navigating itself.
