@@ -1,12 +1,12 @@
 # GAS: The Autonomous Collection Robot
 
 ## Authors
-- Gaurav Raut
-- Advait Patole
-- Sameep Pote
-
+- [Gaurav Raut](https://github.com/gauraut) - M.Eng. Robotics student. I like to make puns.
+- [Advait Patole](https://github.com/advaitp) - Graduate student at University of Maryland pursuing M.Eng. Robotics. Likes rock music.
+- [Sameep Pote](https://github.com/Sameep2808) - Graduate student at University of Maryland pursuing M.Eng. Robotics.Loves to watch animes.
 ## License
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 MIT License
 
 Copyright (c) 2021 Gaurav Raut, Advait Patole, Sameep Pote
