@@ -1,12 +1,13 @@
 # GAS: The Autonomous Collection Robot
-
+[![Build Status](https://app.travis-ci.com/Sameep2808/gas.svg?branch=main)](https://app.travis-ci.com/Sameep2808/gas)
+[![Coverage Status](https://coveralls.io/repos/github/Sameep2808/gas/badge.svg?branch=master)](https://coveralls.io/github/Sameep2808/gas?branch=master)
 ## Authors
-- Gaurav Raut
-- Advait Patole
-- Sameep Pote
-
+- [Gaurav Raut](https://github.com/gauraut) - M.Eng. Robotics student. I like to make puns.
+- [Advait Patole](https://github.com/advaitp) - Graduate student at University of Maryland pursuing M.Eng. Robotics. Likes rock music.
+- [Sameep Pote](https://github.com/Sameep2808) - Graduate student at University of Maryland pursuing M.Eng. Robotics.Loves to watch animes.
 ## License
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 MIT License
 
 Copyright (c) 2021 Gaurav Raut, Advait Patole, Sameep Pote
@@ -29,9 +30,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-## AIP documents
+## AIP documents and links
 - Product and Iteration backlogs, Work logs - https://docs.google.com/spreadsheets/d/1KLyT2uEeI9b1TvwLfODoASXBfRGHRH0ggyx3o0lfnI0/edit?usp=sharing
 - Sprint Meeting Document - https://docs.google.com/document/d/13UunkO20LzQ7dAkEkqdN7CIHWwQ9Xm0ZXc96tBIPPL8/edit?usp=sharing
+- Video link (Phase 1) - https://youtu.be/7jqNsCYOL8Y
 ## Overview
 
 The following proposal proposes a ROS package which simulates a pickup and place robot in a custom made world which replicates a real world storehouse facility. The code name, ‘GAS’, comes after the initials of the project developers. The idea of our project comes from the concept of warehouse automation. The robot that we are proposing will autonomously find any random targeted object and collect it for the user. Such a robot can be used in a variety of commercial and logistics scenarios. For example, our robot can be deployed in an IKEA storehouse. Here, the robot will input the customer’s receipt and autonomously find the items in the receipt and collect them by searching them in the warehouse. For doing this, the robot will localize itself and autonomously path a way towards the items in the organised warehouse and collect them using its fork actuator and drop the items in the billing area. For this, the robot uses LiDAR and also uses it to avoid any obstacle collision while navigating itself. The camera on robot is used to identify objects using HSV colour space.
