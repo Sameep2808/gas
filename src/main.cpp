@@ -29,11 +29,11 @@
 #include "ros/ros.h"
 #include "collect.hpp"
 
-int main(int argc, char **argv) {a
+int main(int argc, char **argv) {
     ros::init(argc, argv, "gas");
     //gas rob;
     //rob.navigate();
     Collect c;
-    c.spawn("b1",5,0,0,3);
+    c.spawn("b1",4,0,0,1);
     return 0;
-}a
+}
