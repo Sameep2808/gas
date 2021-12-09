@@ -25,12 +25,37 @@
  * SOFTWARE.
  */
 
-#include<gas.hpp>
+#include <Traverse.h>
 #include "ros/ros.h"
+#include <move_base_msgs/MoveBaseActionGoal.h>
+#include <move_base_msgs/MoveBaseAction.h>
+#include <actionlib/client/simple_action_client.h>
+#include <vector>
+
+
 
 int main(int argc, char **argv) {
     ros::init(argc, argv, "gas");
-    gas rob;
-    rob.navigate();
+    ros::NodeHandle nh;
+    
+    Traverse nav(nh);
+    ros::Publisher pub = nh.advertise<move_base_msgs::MoveBaseActionGoal>("/move_base/goal", 100);
+    std::vector <move_base_msgs::MoveBaseActionGoal> goals;
+    move_base_msgs::MoveBaseGoal my_goal;
+    my_goal.target_pose.header.frame_id = "map";
+    my_goal.target_pose.header.stamp = ros::Time::now();
+    my_goal.target_pose.pose.position.x = 7.85;
+    my_goal.target_pose.pose.position.y = 11.46;
+    my_goal.target_pose.pose.orientation.z = -0.712;
+    my_goal.target_pose.pose.orientation.w = 0.70234;
+    nav.move_next(my_goal);
+    ac.sendGoal(my_goal);
+    ac.waitForResult();
+
+ //    while(ros::ok()) {
+ //    	pub.publish(my_goal);
+ //    	ros::spin();
+	// }
+    ROS_INFO_STREAM("Goal reached!");
     return 0;
 }
