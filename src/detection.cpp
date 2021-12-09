@@ -50,6 +50,10 @@ void detect::odomCallback(const nav_msgs::Odometry::ConstPtr& msg) {
 		orientation = msg->pose.pose.orientation.z;
 		pos_x = laser_dist*cos(orientation);
 		pos_y = laser_dist*sin(orientation);
+
+		ROS_INFO("POSITION X OF OBJECT AFTER ALIGNMENT: %lf", pos_x);
+
+		ROS_INFO("POSITION Y OF OBJECT AFTER ALIGNMENT: %lf", pos_y);
 	}
 }
 
