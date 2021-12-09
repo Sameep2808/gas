@@ -25,12 +25,19 @@
  * SOFTWARE.
  */
 
-#include<gas.hpp>
+#include<detection.hpp>
 #include "ros/ros.h"
+#include<vector>
 
 int main(int argc, char **argv) {
-    ros::init(argc, argv, "gas");
-    gas rob;
-    rob.navigate();
+    ros::init(argc, argv, "detection");
+    ros::NodeHandle nh;
+
+    detect det(nh);
+    det.startdetect();
+
+    while(ros::ok()) {
+        ros::spinOnce();
+    }
     return 0;
 }
