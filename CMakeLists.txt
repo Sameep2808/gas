@@ -21,7 +21,7 @@ generate_messages(DEPENDENCIES std_msgs)
 catkin_package()
 
 ## Build talker and listener
-include_directories(include ${catkin_INCLUDE_DIRS})
+include_directories(include ${catkin_INCLUDE_DIRS} include)
 
 add_executable(reach_goal src/reach_goal.cpp)
 target_link_libraries(reach_goal ${catkin_LIBRARIES})
@@ -29,4 +29,5 @@ target_link_libraries(reach_goal ${catkin_LIBRARIES})
 add_executable(transform src/transform.cpp)
 target_link_libraries(transform ${catkin_LIBRARIES})
 
-
+add_executable(main src/main.cpp src/collect.cpp)
+target_link_libraries(main ${catkin_LIBRARIES})
