@@ -25,6 +25,7 @@ private:
 public:
 	Traverse(ros::NodeHandle);
 	void move_next();
+	void to_goal(double, double);
 	ros::Publisher goal_pub;
 	std::vector<double> X = {7.88, 4.6625, 4.48, 7.88, 11.366, 11.3, 4.9, 5.05, 14.33, 15.28, 15.311, 14.1311, 0};
 	std::vector<double> Y = {11.52, 11.61, 7.314, 7.36, 12.9, 18.95, 18.7, 13.27, 12.9, 12.88, 19, 19.06, 7.36};
