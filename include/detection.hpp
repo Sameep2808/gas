@@ -21,6 +21,7 @@ class detect {
 		double pos_y;
 		double orientation;
 		int rotate;
+		int out;
 		
 		ros::Subscriber camsub;
 	    ros::Subscriber scansub;

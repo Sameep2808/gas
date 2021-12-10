@@ -18,7 +18,7 @@
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 
 detect::detect(ros::NodeHandle nh) {
-	ROS_INFO_STREAM("POCHLO");
+	
 	laser_dist = 0.0;
 	aligned = false;
 	get_dist = false;
@@ -27,6 +27,7 @@ detect::detect(ros::NodeHandle nh) {
 	orientation = 0.0;
 	n=nh;
 	rotate = 0;
+	out=0;
 }
 
 void detect::reach_bill() {
@@ -140,7 +141,7 @@ void detect::odomCallback(const nav_msgs::Odometry::ConstPtr& msg) {
 
 void detect::process_image_callback(const sensor_msgs::Image img) {	
 	if(!aligned) {
-		ROS_INFO("Starting process_image_callback if robot not aligned");
+		ROS_INFO("Starting process_image_callback if robot not aligned %d",rotate);
 		cv_bridge::CvImagePtr cv_ptr;
 		try {
 			cv_ptr = cv_bridge::toCvCopy(img, sensor_msgs::image_encodings::BGR8);
@@ -170,11 +171,11 @@ void detect::process_image_callback(const sensor_msgs::Image img) {
 	  		}
 	  	}
 
-	  	if(!spotted && rotate < 2) {
+	  	if(!spotted && rotate < 70) {
 	  		ROS_INFO("KEEP ROTATING OBJECT NOT SPOTTED YET");
 	  		drive_robot(0.0, 0.8);
 	  		rotate++;
-	  		ROS_INFO_STREAM("ROBOT ROTATED TIMES: " << rotate);
+	  		ROS_INFO_STREAM("ROBOT ROTATED TIMES: " << rotate);	
 	  	}
 
 	  	else if(spotted){
@@ -203,20 +204,26 @@ void detect::process_image_callback(const sensor_msgs::Image img) {
 	  	}
 
 	  	else {
-	  		return;
+	  		drive_robot(0.0, 0);
+	  		out=1;
+	  		
+	  		ROS_INFO_STREAM("POCHLO");
+	  		
+	  		
 	  	}
 	}
 }
 
 void detect::startdetect() {
 	ROS_INFO("Starting detection node") ;
-
+	out=0;
+	rotate = 0;
 	camsub = n.subscribe("/camera/rgb/image_raw", 1, &detect::process_image_callback, this);
 	scansub = n.subscribe<sensor_msgs::LaserScan>("/scan", 1, &detect::LaserCallback, this);
 	odomsub = n.subscribe("odom", 1000, &detect::odomCallback, this);
 	motorpub = n.advertise<geometry_msgs::Twist>("/cmd_vel", 2);
-	while(ros::ok()) {
-		ros::spin();
+	while(out==0) {
+		ros::spinOnce();
 	}
 }
 
