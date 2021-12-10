@@ -34,6 +34,7 @@ class detect {
 	    void drive_robot(float lin_x, float ang_z) ;
 	    void startdetect();
 	    void to_goal(double x, double y);
+	    void reach_bill();
 
 	private :
 		ros::NodeHandle n;

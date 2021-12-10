@@ -13,6 +13,7 @@
 #include <move_base_msgs/MoveBaseActionGoal.h>
 #include <move_base_msgs/MoveBaseAction.h>
 #include <actionlib/client/simple_action_client.h>
+#include "collect.hpp"
 
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 
@@ -28,8 +29,36 @@ detect::detect(ros::NodeHandle nh) {
 	rotate = 0;
 }
 
+void detect::reach_bill() {
+    MoveBaseClient ac("move_base", true);
+    while(!ac.waitForServer(ros::Duration(5.0))) {
+    ROS_INFO("Waiting for the move_base action server to come up");
+	}
+	move_base_msgs::MoveBaseGoal cur_goal;
+	cur_goal.target_pose.header.frame_id = "map";
+       cur_goal.target_pose.header.stamp = ros::Time::now();
+   
+    double diff_x = 0.452;
+    double diff_y = -1.0;
+
+    cur_goal.target_pose.pose.position.x = diff_x;
+    cur_goal.target_pose.pose.position.y = diff_y;
+    cur_goal.target_pose.pose.orientation.z = 0.7118;
+    cur_goal.target_pose.pose.orientation.w = 0.70234;
+
+    ac.sendGoal(cur_goal);
+    ac.waitForResult();
+    ROS_INFO_STREAM("Reached near bill");
+    Collect c;
+    c.spawn("Ghe mc",0,0,2.5,1);
+    
+    ROS_INFO_STREAM("Task completed. Killing now!");
+    
+    ros::shutdown();
+   }	
+
 void detect::to_goal(double x, double y) {
-	MoveBaseClient ac("move_base", true);
+    MoveBaseClient ac("move_base", true);
     while(!ac.waitForServer(ros::Duration(5.0))) {
     ROS_INFO("Waiting for the move_base action server to come up");
 	}
@@ -45,6 +74,12 @@ void detect::to_goal(double x, double y) {
     ac.sendGoal(cur_goal);
     ac.waitForResult();
     ROS_INFO_STREAM("Reached near object");
+    Collect c;
+    c.remove_ob("box1");
+    ROS_INFO_STREAM("Closed all sensors");
+    
+    reach_bill();
+    
 }
 
 void detect::drive_robot(float lin_x, float ang_z) {
@@ -139,7 +174,7 @@ void detect::process_image_callback(const sensor_msgs::Image img) {
 	  		ROS_INFO("KEEP ROTATING OBJECT NOT SPOTTED YET");
 	  		drive_robot(0.0, 0.8);
 	  		rotate++;
-	  		ROS_INFO_STREAM("ROTATED: " << rotate);
+	  		ROS_INFO_STREAM("ROBOT ROTATED TIMES: " << rotate);
 	  	}
 
 	  	else if(spotted){
