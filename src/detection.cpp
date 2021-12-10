@@ -8,18 +8,40 @@
 #include<geometry_msgs/Twist.h>
 #include"ros/ros.h"
 #include"detection.hpp"
-#include"Traverse.hpp"
+#include"Traverse.h"
 #include<vector>
+#include <move_base_msgs/MoveBaseActionGoal.h>
+#include <move_base_msgs/MoveBaseAction.h>
+#include <actionlib/client/simple_action_client.h>
+
+typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 
 detect::detect(ros::NodeHandle nh) {
+	ROS_INFO_STREAM("POCHLO");
 	laser_dist = 0.0;
 	aligned = false;
 	get_dist = false;
 	pos_x = 0.0;
 	pos_y = 0.0;
 	orientation = 0.0;
+	n=nh;
+}
 
-	n = nh;
+void detect::to_goal(double x, double y) {
+	MoveBaseClient ac("move_base", true);
+    while(!ac.waitForServer(ros::Duration(5.0))) {
+    ROS_INFO("Waiting for the move_base action server to come up");
+	}
+	move_base_msgs::MoveBaseGoal cur_goal;
+	cur_goal.target_pose.header.frame_id = "map";
+    cur_goal.target_pose.header.stamp = ros::Time::now();
+
+    cur_goal.target_pose.pose.position.x = x;
+    cur_goal.target_pose.pose.position.y = y;
+
+    ac.sendGoal(cur_goal);
+    ac.waitForResult();
+    ROS_INFO_STREAM("Reached near object");
 }
 
 void detect::drive_robot(float lin_x, float ang_z) {
@@ -55,8 +77,9 @@ void detect::odomCallback(const nav_msgs::Odometry::ConstPtr& msg) {
 		ROS_INFO("POSITION X OF OBJECT AFTER ALIGNMENT: %lf", pos_x);
 		ROS_INFO("POSITION Y OF OBJECT AFTER ALIGNMENT: %lf", pos_y);
 		ROS_INFO("TRAVERSING TO THE OBJECT");
-		Traverse tr;
-		tr.to_goal(pos_x, pos_y);
+
+		to_goal(pos_x, pos_y);
+
 	}
 }
 

@@ -23,17 +23,9 @@ catkin_package()
 
 include_directories(include ${catkin_INCLUDE_DIRS} src include)
 
-add_executable(collect src/collect.cpp)
-target_link_libraries(collect ${catkin_LIBRARIES} )
-add_dependencies(collect gas_generate_messages_cpp)
-
-add_executable(detection src/detection.cpp src/main.cpp)
-target_link_libraries(detection ${catkin_LIBRARIES} )
-add_dependencies(detection gas_generate_messages_cpp)
-
-add_executable(main src/main.cpp src/Traverse.cpp)
+add_executable(main src/main.cpp src/Traverse.cpp src/detection.cpp src/collect.cpp)
 target_link_libraries(main ${catkin_LIBRARIES})
 
-add_executable(main src/main.cpp src/collect.cpp)
-target_link_libraries(main ${catkin_LIBRARIES})
+add_executable(collection src/collection.cpp)
+target_link_libraries(collection ${catkin_LIBRARIES})
 

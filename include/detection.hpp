@@ -7,6 +7,10 @@
 #include <nav_msgs/Odometry.h>
 #include<geometry_msgs/Twist.h>
 #include"ros/ros.h"
+#include "Traverse.h"
+#include <move_base_msgs/MoveBaseActionGoal.h>
+#include <move_base_msgs/MoveBaseAction.h>
+#include <actionlib/client/simple_action_client.h>
 
 class detect {
 	public :
@@ -16,7 +20,7 @@ class detect {
 		double pos_x;
 		double pos_y;
 		double orientation;
-
+		
 		ros::Subscriber camsub;
 	    ros::Subscriber scansub;
 	    ros::Subscriber odomsub;
@@ -28,6 +32,7 @@ class detect {
 	    void odomCallback(const nav_msgs::Odometry::ConstPtr& msg);
 	    void drive_robot(float lin_x, float ang_z) ;
 	    void startdetect();
+	    void to_goal(double x, double y);
 
 	private :
 		ros::NodeHandle n;

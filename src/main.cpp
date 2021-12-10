@@ -29,20 +29,16 @@
 #include <Traverse.h>
 #include "ros/ros.h"
 #include "collect.hpp"
+#include "detection.hpp"
 #include <vector>
-
 
 
 int main(int argc, char **argv) {
     ros::init(argc, argv, "gas");
     ros::NodeHandle nh;
-    
-    Traverse nav(nh);
-    nav.move_next();
+    Traverse tr(nh) ;
+    tr.move_next();
     ROS_INFO_STREAM("Completed navigation!");
-
-    detect det(nh);
-    det.startdetect();
 
     while(ros::ok()) {
         ros::spinOnce();
