@@ -25,6 +25,7 @@ detect::detect(ros::NodeHandle nh) {
 	pos_y = 0.0;
 	orientation = 0.0;
 	n=nh;
+	rotate = 0;
 }
 
 void detect::to_goal(double x, double y) {
@@ -38,6 +39,8 @@ void detect::to_goal(double x, double y) {
 
     cur_goal.target_pose.pose.position.x = x;
     cur_goal.target_pose.pose.position.y = y;
+    cur_goal.target_pose.pose.orientation.z = -0.7118;
+    cur_goal.target_pose.pose.orientation.w = 0.70234;
 
     ac.sendGoal(cur_goal);
     ac.waitForResult();
@@ -59,9 +62,23 @@ void detect::drive_robot(float lin_x, float ang_z) {
 
 void detect::LaserCallback(const sensor_msgs::LaserScan::ConstPtr& msg) {
 	if(aligned) {
+		auto min_dist1 = 100.0;
+		auto min_dist2 = 100.0;
+		double curr_dist1, curr_dist2 ;
 		ROS_INFO("GETTING THE DISTANCE OF OBJECT AFTER ALIGNMENT");
 
-		laser_dist = msg->ranges[0];
+		for(int i = 0 ; i < 15 ; i++) {
+			curr_dist1 = msg->ranges[i];
+			if(curr_dist1 < min_dist1 && curr_dist1 > 0) {
+				min_dist1 = curr_dist1;
+			}
+
+			curr_dist2 = msg->ranges[359-i];
+			if(curr_dist2 < min_dist2 && curr_dist2 > 0) {
+				min_dist2 = curr_dist2;
+			}
+		}
+		laser_dist = std::min(min_dist1, min_dist2);
 		get_dist = true;
 		ROS_INFO("DISTANCE OF OBJECT AFTER ALIGNMENT: %lf", laser_dist);
 		drive_robot(0.0, 0.0) ;
@@ -71,8 +88,11 @@ void detect::LaserCallback(const sensor_msgs::LaserScan::ConstPtr& msg) {
 void detect::odomCallback(const nav_msgs::Odometry::ConstPtr& msg) {
 	if(get_dist) {
 		orientation = msg->pose.pose.orientation.z;
-		pos_x = laser_dist*cos(orientation);
-		pos_y = laser_dist*sin(orientation);
+		double inc_x = msg->pose.pose.position.x;
+		double inc_y = msg->pose.pose.position.y;
+
+		pos_x = laser_dist*cos(orientation) + inc_x - 0.75;
+		pos_y = laser_dist*sin(orientation) + inc_y - 0.5;
 
 		ROS_INFO("POSITION X OF OBJECT AFTER ALIGNMENT: %lf", pos_x);
 		ROS_INFO("POSITION Y OF OBJECT AFTER ALIGNMENT: %lf", pos_y);
@@ -115,12 +135,14 @@ void detect::process_image_callback(const sensor_msgs::Image img) {
 	  		}
 	  	}
 
-	  	if(!spotted) {
+	  	if(!spotted && rotate < 2) {
 	  		ROS_INFO("KEEP ROTATING OBJECT NOT SPOTTED YET");
 	  		drive_robot(0.0, 0.8);
+	  		rotate++;
+	  		ROS_INFO_STREAM("ROTATED: " << rotate);
 	  	}
 
-	  	else {
+	  	else if(spotted){
 	  		ROS_INFO("SPOTTED STOP CURRENTLY");
 	  		drive_robot(0.0, 0.0);
 	  		int row = pos[0] ;
@@ -132,7 +154,7 @@ void detect::process_image_callback(const sensor_msgs::Image img) {
 			}
 
 			// GO STRAIGHT
-			else if(col > im.cols/3 && col< (2*im.cols/3)) {
+			else if(col < 2*im.cols/3 &&col > im.cols/3) {
 				ROS_INFO("Moving STRAIGHT");
 				aligned = true;
 				drive_robot(0.0, 0.0) ;
@@ -144,6 +166,10 @@ void detect::process_image_callback(const sensor_msgs::Image img) {
 				drive_robot(0.0, -0.3) ;
 			}
 	  	}
+
+	  	else {
+	  		return;
+	  	}
 	}
 }
 
@@ -154,5 +180,8 @@ void detect::startdetect() {
 	scansub = n.subscribe<sensor_msgs::LaserScan>("/scan", 1, &detect::LaserCallback, this);
 	odomsub = n.subscribe("odom", 1000, &detect::odomCallback, this);
 	motorpub = n.advertise<geometry_msgs::Twist>("/cmd_vel", 2);
+	while(ros::ok()) {
+		ros::spin();
+	}
 }
 

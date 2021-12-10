@@ -63,19 +63,19 @@ void Collect::spawn(char* name,double xd, double yd, double zd, int c)
         }
 		
 		s<<"</material>\
-		<transparency>0</transparency>\
-		<cast_shadows>1</cast_shadows>\
-	      </visual>\
-	      <collision name='collision'>\
-		<laser_retro>0</laser_retro>\
-		<max_contacts>10</max_contacts>\
-		<pose>0 0 0 0 -0 0</pose>\
-		<geometry>\
-		  <box>\
-		    <size>0.5 0.5 0.5</size>\
-		  </box>\
-		</geometry>\
-		<surface>\
+<transparency>0</transparency>\
+<cast_shadows>1</cast_shadows>\
+     </visual>\
+     <collision name='collision'>\
+<laser_retro>0</laser_retro>\
+<max_contacts>10</max_contacts>\
+<pose>0 0 0 0 -0 0</pose>\
+<geometry>\
+ <box>\
+   <size>0.5 0.5 0.5</size>\
+ </box>\
+</geometry>\
+<surface>\
           <friction>\
             <ode>\
               <mu>1</mu>\
@@ -120,12 +120,12 @@ void Collect::spawn(char* name,double xd, double yd, double zd, int c)
             </bullet>\
           </contact>\
         </surface>\
-	      </collision>\
-	    </link>\
-	    <static>0</static>\
-	    <allow_auto_disable>1</allow_auto_disable>\
-	  </model>\
-	  </sdf>";
+     </collision>\
+   </link>\
+   <static>0</static>\
+   <allow_auto_disable>1</allow_auto_disable>\
+ </model>\
+ </sdf>";
     
     spawn_model.request.model_xml=s.str();
     spawn_model.request.robot_namespace = "";
