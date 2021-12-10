@@ -25,31 +25,27 @@
  * SOFTWARE.
  */
 
-<<<<<<< HEAD
-#include <Traverse.h>
-=======
 
->>>>>>> collection
+#include <Traverse.h>
 #include "ros/ros.h"
 #include "collect.hpp"
-
 #include <vector>
 
 
 
 int main(int argc, char **argv) {
     ros::init(argc, argv, "gas");
-<<<<<<< HEAD
     ros::NodeHandle nh;
     
     Traverse nav(nh);
     nav.move_next();
     ROS_INFO_STREAM("Completed navigation!");
-=======
-    //gas rob;
-    //rob.navigate();
-    Collect c;
-    c.spawn("b1",4,0,0,1);
->>>>>>> collection
+
+    detect det(nh);
+    det.startdetect();
+
+    while(ros::ok()) {
+        ros::spinOnce();
+    }
     return 0;
 }
