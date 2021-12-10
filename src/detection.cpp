@@ -8,6 +8,7 @@
 #include<geometry_msgs/Twist.h>
 #include"ros/ros.h"
 #include"detection.hpp"
+#include"Traverse.hpp"
 #include<vector>
 
 detect::detect(ros::NodeHandle nh) {
@@ -52,8 +53,10 @@ void detect::odomCallback(const nav_msgs::Odometry::ConstPtr& msg) {
 		pos_y = laser_dist*sin(orientation);
 
 		ROS_INFO("POSITION X OF OBJECT AFTER ALIGNMENT: %lf", pos_x);
-
 		ROS_INFO("POSITION Y OF OBJECT AFTER ALIGNMENT: %lf", pos_y);
+		ROS_INFO("TRAVERSING TO THE OBJECT");
+		Traverse tr;
+		tr.to_goal(pos_x, pos_y);
 	}
 }
 
