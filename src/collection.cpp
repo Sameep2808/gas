@@ -176,7 +176,7 @@ int main(int argc, char **argv) {
   if (ros::isInitialized()) {
     int frequency = 100;
    
-    spawn("box1",-5.5,1,0,1);
+    spawn("box1",-2.5,-3,0,1);
     //remove_ob("box1");
    
     }

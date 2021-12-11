@@ -98,22 +98,32 @@ void detect::drive_robot(float lin_x, float ang_z) {
 
 void detect::LaserCallback(const sensor_msgs::LaserScan::ConstPtr& msg) {
 	if(aligned) {
-		auto min_dist1 = 100.0;
-		auto min_dist2 = 100.0;
-		double curr_dist1, curr_dist2 ;
+		double min_dist1 = 3.0;
+		double min_dist2 = 3.0;
+		double curr_dist1=100, curr_dist2=100;
 		ROS_INFO("GETTING THE DISTANCE OF OBJECT AFTER ALIGNMENT");
-
+		while (curr_dist1 > 3 || curr_dist2 > 3)
+		{
 		for(int i = 0 ; i < 15 ; i++) {
+			
+			ROS_INFO("d1 = %f",curr_dist1);
+			ROS_INFO("d2 = %f",curr_dist2);
 			curr_dist1 = msg->ranges[i];
+			curr_dist2 = msg->ranges[359-i];			
 			if(curr_dist1 < min_dist1 && curr_dist1 > 0) {
 				min_dist1 = curr_dist1;
+				drive_robot(0,0);
 			}
-
-			curr_dist2 = msg->ranges[359-i];
-			if(curr_dist2 < min_dist2 && curr_dist2 > 0) {
+			else if(curr_dist2 < min_dist2 && curr_dist2 > 0) {
 				min_dist2 = curr_dist2;
+				drive_robot(0,0);
 			}
-		}
+			else
+			{
+				drive_robot(0.2,0);
+			}
+			
+		}}
 		laser_dist = std::min(min_dist1, min_dist2);
 		get_dist = true;
 		ROS_INFO("DISTANCE OF OBJECT AFTER ALIGNMENT: %lf", laser_dist);
@@ -206,7 +216,6 @@ void detect::process_image_callback(const sensor_msgs::Image img) {
 	  	else {
 	  		drive_robot(0.0, 0);
 	  		out=1;
-	  		
 	  		ROS_INFO_STREAM("POCHLO");
 	  		
 	  		
