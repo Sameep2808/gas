@@ -129,7 +129,7 @@ void detect::LaserCallback(const sensor_msgs::LaserScan::ConstPtr& msg) {
 		laser_dist=curr_dist1;
 		ROS_INFO("DISTANCE OF OBJECT AFTER ALIGNMENT: %lf", laser_dist);}
 		else{
-		drive_robot(0.1, 0.0) ;
+		drive_robot(0.5, 0.0) ;
 		aligned=false;
 		}
 	}
