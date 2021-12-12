@@ -14,7 +14,7 @@
 #include "gazebo_msgs/DeleteModel.h"
 #include <string>
 
-void spawn(char* name,double xd, double yd, double zd, int c)
+void spawn(const char* name,double xd, double yd, double zd, int c)
 {
 ros::NodeHandle nh;
 ros::service::waitForService("gazebo/spawn_sdf_model");
@@ -157,7 +157,7 @@ if(c==1){
     ROS_INFO("Result: %s, code %u",spawn_model.response.status_message.c_str(), spawn_model.response.success);
 }
 
-void remove_ob(char* name)
+void remove_ob(const char* name)
 {
 ros::NodeHandle n;
 ros::service::waitForService("gazebo/delete_model");

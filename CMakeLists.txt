@@ -29,3 +29,24 @@ target_link_libraries(main ${catkin_LIBRARIES})
 add_executable(collection src/collection.cpp)
 target_link_libraries(collection ${catkin_LIBRARIES})
 
+if (CATKIN_ENABLE_TESTING)
+  
+  find_package(rostest REQUIRED)
+  
+  add_rostest_gtest(
+   ct 
+   test/test.launch  
+   test/collect_test.cpp 
+   src/collect.cpp)
+
+  target_link_libraries(
+   ct 
+   ${catkin_LIBRARIES}
+   ${OpenCV_LIBS})
+  
+  add_dependencies(
+    ct
+    main
+    ${catkin_EXPORTED_TARGETS}
+  )
+endif()

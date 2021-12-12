@@ -62,6 +62,9 @@ class Collect {
    
 
  public :
+ 	
+ 	bool checkr=false;
+ 	bool checks=false;
     
     // Function to Spawn Objects
     
