@@ -14,6 +14,7 @@
 #include <move_base_msgs/MoveBaseAction.h>
 #include <actionlib/client/simple_action_client.h>
 #include "collect.hpp"
+#include "tf/transform_datatypes.h"
 
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 
@@ -51,7 +52,7 @@ void detect::reach_bill() {
     ac.waitForResult();
     ROS_INFO_STREAM("Reached near bill");
     Collect c;
-    c.spawn("Ghe mc",0,0,2.5,1);
+    c.spawn("Ghe mc",0.452,-0.25,2.5,1);
     
     ROS_INFO_STREAM("Task completed. Killing now!");
     
@@ -100,11 +101,10 @@ void detect::LaserCallback(const sensor_msgs::LaserScan::ConstPtr& msg) {
 	if(aligned) {
 		double min_dist1 = 3.0;
 		double min_dist2 = 3.0;
-		double curr_dist1=100, curr_dist2=100;
+		double curr_dist1, curr_dist2;
 		ROS_INFO("GETTING THE DISTANCE OF OBJECT AFTER ALIGNMENT");
-		while (curr_dist1 > 3 || curr_dist2 > 3)
-		{
-		for(int i = 0 ; i < 15 ; i++) {
+		
+		/*for(int i = 0 ; i < 15 ; i++) {
 			
 			ROS_INFO("d1 = %f",curr_dist1);
 			ROS_INFO("d2 = %f",curr_dist2);
@@ -114,20 +114,24 @@ void detect::LaserCallback(const sensor_msgs::LaserScan::ConstPtr& msg) {
 				min_dist1 = curr_dist1;
 				drive_robot(0,0);
 			}
-			else if(curr_dist2 < min_dist2 && curr_dist2 > 0) {
+			if(curr_dist2 < min_dist2 && curr_dist2 > 0) {
 				min_dist2 = curr_dist2;
 				drive_robot(0,0);
 			}
-			else
-			{
-				drive_robot(0.2,0);
-			}
 			
-		}}
-		laser_dist = std::min(min_dist1, min_dist2);
+			
+		}*/
+		
+		curr_dist1 = msg->ranges[359];
+		ROS_INFO("d1 = %f",curr_dist1);
+		if(curr_dist1 < 3){
 		get_dist = true;
-		ROS_INFO("DISTANCE OF OBJECT AFTER ALIGNMENT: %lf", laser_dist);
-		drive_robot(0.0, 0.0) ;
+		laser_dist=curr_dist1;
+		ROS_INFO("DISTANCE OF OBJECT AFTER ALIGNMENT: %lf", laser_dist);}
+		else{
+		drive_robot(0.1, 0.0) ;
+		aligned=false;
+		}
 	}
 }
 
@@ -136,9 +140,18 @@ void detect::odomCallback(const nav_msgs::Odometry::ConstPtr& msg) {
 		orientation = msg->pose.pose.orientation.z;
 		double inc_x = msg->pose.pose.position.x;
 		double inc_y = msg->pose.pose.position.y;
-
-		pos_x = laser_dist*cos(orientation) + inc_x - 0.75;
-		pos_y = laser_dist*sin(orientation) + inc_y - 0.5;
+		
+		tf::Quaternion q(msg->pose.pose.orientation.x,msg->pose.pose.orientation.y,msg->pose.pose.orientation.z,msg->pose.pose.orientation.w);
+		double roll,pitch,yaw;
+		tf::Matrix3x3 m(q);
+		m.getRPY(roll,pitch,yaw);
+		ROS_INFO("POSITION OOOOOOOOO %lf", sin(yaw));
+		
+		ROS_INFO("POSITION X  %lf", inc_x);
+		ROS_INFO("POSITION Y  %lf", inc_y);
+		
+		pos_x = inc_x + (laser_dist - 1)*cos(yaw);
+		pos_y = inc_y  + (laser_dist - 1)*sin(yaw) ;
 
 		ROS_INFO("POSITION X OF OBJECT AFTER ALIGNMENT: %lf", pos_x);
 		ROS_INFO("POSITION Y OF OBJECT AFTER ALIGNMENT: %lf", pos_y);
