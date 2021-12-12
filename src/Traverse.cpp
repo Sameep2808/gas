@@ -19,7 +19,7 @@ void Traverse::move_next() {
   	}
   	ros::NodeHandle ns;
   	detect det(ns);
-  	for(int i = 0; i <= 12; i++) {
+  	for(int i = 0; i <= 5; i++) {
   		move_base_msgs::MoveBaseGoal cur_goal;
   		cur_goal.target_pose.header.frame_id = "map";
     	cur_goal.target_pose.header.stamp = ros::Time::now();

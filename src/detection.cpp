@@ -98,36 +98,46 @@ void detect::drive_robot(float lin_x, float ang_z) {
 
 void detect::LaserCallback(const sensor_msgs::LaserScan::ConstPtr& msg) {
 	if(aligned) {
-		double min_dist1 = 3.0;
-		double min_dist2 = 3.0;
-		double curr_dist1=100, curr_dist2=100;
-		ROS_INFO("GETTING THE DISTANCE OF OBJECT AFTER ALIGNMENT");
-		while (curr_dist1 > 3 || curr_dist2 > 3)
-		{
-		for(int i = 0 ; i < 15 ; i++) {
-			
-			ROS_INFO("d1 = %f",curr_dist1);
-			ROS_INFO("d2 = %f",curr_dist2);
-			curr_dist1 = msg->ranges[i];
-			curr_dist2 = msg->ranges[359-i];			
-			if(curr_dist1 < min_dist1 && curr_dist1 > 0) {
-				min_dist1 = curr_dist1;
-				drive_robot(0,0);
-			}
-			else if(curr_dist2 < min_dist2 && curr_dist2 > 0) {
-				min_dist2 = curr_dist2;
-				drive_robot(0,0);
-			}
-			else
-			{
-				drive_robot(0.2,0);
-			}
-			
-		}}
-		laser_dist = std::min(min_dist1, min_dist2);
+		geometry_msgs::Twist motor_command ;
+    	motor_command.linear.x = 0.2;
+    	motor_command.angular.z = 0;
+		while(msg->ranges[0] > 2 && msg->ranges[345] > 2 && msg->ranges[15] > 2) {
+			motorpub.publish(motor_command);
+		}
+		drive_robot(0,0);
+		auto temp = std::min(msg->ranges[0], msg->ranges[345]);
+		laser_dist = std::min(temp, msg->ranges[15]);
 		get_dist = true;
-		ROS_INFO("DISTANCE OF OBJECT AFTER ALIGNMENT: %lf", laser_dist);
-		drive_robot(0.0, 0.0) ;
+		// double min_dist1 = 3.0;
+		// double min_dist2 = 3.0;
+		// double curr_dist1=100, curr_dist2=100;
+		// ROS_INFO("GETTING THE DISTANCE OF OBJECT AFTER ALIGNMENT");
+		// while (curr_dist1 > 3 || curr_dist2 > 3)
+		// {
+		// for(int i = 0 ; i < 15 ; i++) {
+			
+		// 	ROS_INFO("d1 = %f",curr_dist1);
+		// 	ROS_INFO("d2 = %f",curr_dist2);
+		// 	curr_dist1 = msg->ranges[i];
+		// 	curr_dist2 = msg->ranges[359-i];			
+		// 	if(curr_dist1 < min_dist1 && curr_dist1 > 0) {
+		// 		min_dist1 = curr_dist1;
+		// 		drive_robot(0,0);
+		// 	}
+		// 	else if(curr_dist2 < min_dist2 && curr_dist2 > 0) {
+		// 		min_dist2 = curr_dist2;
+		// 		drive_robot(0,0);
+		// 	}
+		// 	else
+		// 	{
+		// 		drive_robot(0.2,0);
+		// 	}
+			
+		// }}
+		// laser_dist = std::min(min_dist1, min_dist2);
+		// get_dist = true;
+		// ROS_INFO("DISTANCE OF OBJECT AFTER ALIGNMENT: %lf", laser_dist);
+		// drive_robot(0.0, 0.0) ;
 	}
 }
 
@@ -137,8 +147,8 @@ void detect::odomCallback(const nav_msgs::Odometry::ConstPtr& msg) {
 		double inc_x = msg->pose.pose.position.x;
 		double inc_y = msg->pose.pose.position.y;
 
-		pos_x = laser_dist*cos(orientation) + inc_x - 0.75;
-		pos_y = laser_dist*sin(orientation) + inc_y - 0.5;
+		pos_x = laser_dist*cos(orientation) + inc_x - 2;
+		pos_y = laser_dist*sin(orientation) + inc_y - 1;
 
 		ROS_INFO("POSITION X OF OBJECT AFTER ALIGNMENT: %lf", pos_x);
 		ROS_INFO("POSITION Y OF OBJECT AFTER ALIGNMENT: %lf", pos_y);
@@ -162,16 +172,16 @@ void detect::process_image_callback(const sensor_msgs::Image img) {
 		    return;
 	  	}
 
-	  	bool spotted = false ;
+	  	bool spotted = false;
 
-	  	std::vector<int> pos ;
-	  	cv::Mat im = cv_ptr->image ;
+	  	std::vector<int> pos;
+	  	cv::Mat im = cv_ptr->image;
 	  	
-	  	for(int i = 0 ; i < im.rows ; i++)
+	  	for(int i = 0; i < im.rows; i++)
 	  	{
 	  		for(int j = 0 ; j < im.cols ; j++)
 	  		{
-	  			cv::Vec3b pixel = im.at<cv::Vec3b>(i, j) ;
+	  			cv::Vec3b pixel = im.at<cv::Vec3b>(i, j);
 	  			if(pixel.val[0] == 0 && pixel.val[1] == 0 && pixel.val[2] == 255)
 	  			{
 	  				spotted = true ;
