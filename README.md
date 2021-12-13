@@ -84,6 +84,8 @@ the product manager of each other. The stakeholders and users
 will drive the product backlog and requirements. This suggests
 that the product backlog is a rather a live document rather than
 a predefined checklist.
+## Working
+![gif](https://user-images.githubusercontent.com/77606010/145767290-c55dae8e-2dfe-49f5-92b8-2136d36f49ad.gif)
 
 ## Standard install via command-line
 ```
