@@ -2,8 +2,8 @@
 
 void Collect::spawn(char* name,double xd, double yd, double zd, int c)
 {
-	//ros::NodeHandle nh;
-	ros::service::waitForService("gazebo/spawn_sdf_model");
+  //ros::NodeHandle nh;
+  ros::service::waitForService("gazebo/spawn_sdf_model");
     spawn_model_client = nh.serviceClient<gazebo_msgs::SpawnModel>("gazebo/spawn_sdf_model");
     gazebo_msgs::SpawnModel spawn_model;
     spawn_model.request.model_name = name; 
@@ -13,38 +13,38 @@ void Collect::spawn(char* name,double xd, double yd, double zd, int c)
     std::stringstream s;\
     //<size>0.102415 0.096252 0.101031</size>
     s<<"<?xml version='1.0'?>\
-	  <sdf version='1.7'>\
-	  <model name='Box1'>\
-	    <link name='link_0'>\
-	      <inertial>\
-		<mass>0.000994789</mass>\
-		<inertia>\
-		  <ixx>1.61419e-06</ixx>\
-		  <ixy>0</ixy>\
-		  <ixz>0</ixz>\
-		  <iyy>1.71568e-06</iyy>\
-		  <iyz>0</iyz>\
-		  <izz>1.63752e-06</izz>\
-		</inertia>\
-		<pose>0 0 0 0 -0 0</pose>\
-	      </inertial>\
-	      <pose>0 0 -0 0 -0 0</pose>\
-	      <visual name='visual'>\
-		<pose>0 0 0 0 -0 0</pose>\
-		<geometry>\
-		  <box>\
-		    <size>0.5 0.5 0.5</size>\
-		  </box>\
-		</geometry>\
-		<material>\
-		  <script>\
-		    <uri>file://media/materials/scripts/gazebo.material</uri>\
-		    <name>Gazebo/Grey</name>\
-		  </script>\
-		  <shader type='pixel'/>";
-		  
-	if(c==1){
-		  s<<"<ambient>1 0 0 1</ambient>\
+    <sdf version='1.7'>\
+    <model name='Box1'>\
+      <link name='link_0'>\
+        <inertial>\
+    <mass>0.000994789</mass>\
+    <inertia>\
+      <ixx>1.61419e-06</ixx>\
+      <ixy>0</ixy>\
+      <ixz>0</ixz>\
+      <iyy>1.71568e-06</iyy>\
+      <iyz>0</iyz>\
+      <izz>1.63752e-06</izz>\
+    </inertia>\
+    <pose>0 0 0 0 -0 0</pose>\
+        </inertial>\
+        <pose>0 0 -0 0 -0 0</pose>\
+        <visual name='visual'>\
+    <pose>0 0 0 0 -0 0</pose>\
+    <geometry>\
+      <box>\
+        <size>0.5 0.5 0.5</size>\
+      </box>\
+    </geometry>\
+    <material>\
+      <script>\
+        <uri>file://media/materials/scripts/gazebo.material</uri>\
+        <name>Gazebo/Grey</name>\
+      </script>\
+      <shader type='pixel'/>";
+      
+  if(c==1){
+      s<<"<ambient>1 0 0 1</ambient>\
           <diffuse>1 0 0 1</diffuse>\
           <specular>1 0 0 1</specular>\
           <emissive>1 0 0 1</emissive>";
@@ -61,8 +61,8 @@ void Collect::spawn(char* name,double xd, double yd, double zd, int c)
           <specular>0 0 1 1</specular>\
           <emissive>0 0 1 1</emissive>";
         }
-		
-		s<<"</material>\
+    
+    s<<"</material>\
 <transparency>0</transparency>\
 <cast_shadows>1</cast_shadows>\
      </visual>\
@@ -144,13 +144,15 @@ void Collect::spawn(char* name,double xd, double yd, double zd, int c)
 
 void Collect::remove_ob(char* name)
 {
-	//ros::NodeHandle nh;
-	ros::service::waitForService("gazebo/delete_model");
-	delete_model_client = nh.serviceClient<gazebo_msgs::DeleteModel>("gazebo/delete_model");
-	gazebo_msgs::DeleteModel delete_model;
-	delete_model.request.model_name = name;      
-  checkr = delete_model_client.call(delete_model);
+  //ros::NodeHandle nh;
+  ros::service::waitForService("gazebo/delete_model");
+  delete_model_client = nh.serviceClient<gazebo_msgs::DeleteModel>("gazebo/delete_model");
+  gazebo_msgs::DeleteModel delete_model;
+  delete_model.request.model_name = name;
+  
+        
+        checkr = delete_model_client.call(delete_model);
+        
+        
+    
 }
-
-
-
