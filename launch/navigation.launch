@@ -4,6 +4,7 @@
 
   <!-- Arguments -->
   <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
+  <arg name="record_gas" default="false" />
   <arg name="x_pos" default="5.0"/>
   <arg name="y_pos" default="0.0"/>
   <arg name="z_pos" default="0.0"/>
@@ -19,6 +20,10 @@
   <!-- Map server -->
   <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
 
+  <!-- Rosbag node -->
+  <node pkg="rosbag" type="record" name="rosbag_record_talker"
+  args="record --duration=15 -O $(find gas)/launch/record.bag -x /camera/(.*)"
+  if="$(arg record_gas)" />
   <!-- AMCL -->
   <include file="$(find turtlebot3_navigation)/launch/amcl.launch"/>
 
