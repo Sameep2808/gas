@@ -36,8 +36,8 @@ if (CATKIN_ENABLE_TESTING)
   add_rostest_gtest(
    test_gas 
    test/test.launch
-   #test/detecttest.cpp 
-   test/Traverse_test.cpp 
+   test/Traverse_test.cpp
+   test/detecttest.cpp  
    test/collect_test.cpp 
    test/main_test.cpp 
    src/collect.cpp

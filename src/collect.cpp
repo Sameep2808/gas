@@ -148,13 +148,8 @@ void Collect::remove_ob(char* name)
 	ros::service::waitForService("gazebo/delete_model");
 	delete_model_client = nh.serviceClient<gazebo_msgs::DeleteModel>("gazebo/delete_model");
 	gazebo_msgs::DeleteModel delete_model;
-	delete_model.request.model_name = name;
-	
-        
-        checkr = delete_model_client.call(delete_model);
-        
-        
-    
+	delete_model.request.model_name = name;      
+  checkr = delete_model_client.call(delete_model);
 }
 
 

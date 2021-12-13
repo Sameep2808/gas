@@ -33,5 +33,10 @@
     <node pkg="rviz" type="rviz" name="rviz" required="true"
           args="-d $(find turtlebot3_navigation)/rviz/turtlebot3_navigation.rviz"/>
   </group>
-  
+
+  <!-- GAS ROBOT Node -->
+  <arg name="x_d" default="-5"/>
+  <arg name="y_d" default="-1.5"/>
+  <arg name="z_d" default="0"/>
+  <node pkg="gas" type="main" name="main_node" args="$(arg x_d) $(arg y_d)" respawn="false" output="screen"/>
 </launch>
