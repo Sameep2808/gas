@@ -1,3 +1,6 @@
-Done processing ./include/gas.hpp
+Done processing ./include/Traverse.h
+Done processing ./src/Traverse.cpp
+Done processing ./src/collect.cpp
+Done processing ./src/detection.cpp
 Done processing ./src/main.cpp
-Done processing ./src/gas.cpp
+Total errors found: 11
