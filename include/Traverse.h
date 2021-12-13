@@ -45,8 +45,8 @@ class Traverse {
   /// @brief Reach the billing site
   ///
   void reach_bill();
-  double bill_x; // x-coordinate of billing site
-  double bill_y; // y-coordinate of billing site
+  double bill_x;  // x-coordinate of billing site
+  double bill_y;  // y-coordinate of billing site
 
   // X coordinates for traversing
   std::vector<double> X = { -2.29, -5.1, 1.184, -5, 5.35, 4.221 };
@@ -59,7 +59,7 @@ class Traverse {
 
   // W orientation for traversing
   std::vector<double> W = { 0.707, 0.7071, 3.3, 0.7071, 0.7071, 0.7071 };
-  std::vector<move_base_msgs::MoveBaseGoal> goals; // Goals for traversing
+  std::vector<move_base_msgs::MoveBaseGoal> goals;  // Goals for traversing
 
  private:
   // Node Handle for ROS

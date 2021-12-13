@@ -27,31 +27,30 @@
 
 
 #include <Traverse.h>
+#include <vector>
 #include "ros/ros.h"
 #include "collect.hpp"
 #include "detection.hpp"
-#include <vector>
 
 
 int main(int argc, char **argv) {
     ros::init(argc, argv, "main");
     ros::NodeHandle nh;
     char* name = "box1";
-    double x_d ;
-    double y_d ;
-    double z_d ;
+    double x_d;
+    double y_d;
+    double z_d;
     int c = 1;
-    
     x_d = atoll(argv[1]);
     y_d = atoll(argv[2]);
 
     Collect col;
     col.spawn(name, x_d, y_d, 0, c);
-    Traverse tr(nh) ;
+    Traverse tr(nh);
     tr.move_next();
     ROS_INFO_STREAM("Completed navigation!");
 
-    while(ros::ok()) {
+    while (ros::ok()) {
         ros::spinOnce();
     }
     return 0;
