@@ -1,16 +1,8 @@
-///============================================================================
-/// @file        : collect.cpp
-/// @author      : Sameep Pote (Driver)
-/// @author      : Gaurav Raut (Navigator)
-/// @author      : Advait Patole (Design Keeper)
-/// @version     : 1.0.1
-/// @copyright   : MIT License
-/// @brief       : collect.cpp is used to spawn and collect the object
-///============================================================================
-
 #include <collect.hpp>
 
-void Collect::spawn(char *name, double xd, double yd, double zd, int c) {
+void Collect::spawn(char* name,double xd, double yd, double zd, int c)
+{
+  ros::NodeHandle nh;
   ros::service::waitForService("gazebo/spawn_sdf_model");
   spawn_model_client = nh.serviceClient<gazebo_msgs::SpawnModel>(
       "gazebo/spawn_sdf_model");
@@ -97,65 +89,60 @@ void Collect::spawn(char *name, double xd, double yd, double zd, int c) {
                 <ode>\
                   <slip>0</slip>\
                 </ode>\
-              </torsional>\
-            </friction>\
-            <bounce>\
-              <restitution_coefficient>0</restitution_coefficient>\
-              <threshold>1e+06</threshold>\
-            </bounce>\
-            <contact>\
-              <collide_without_contact>0</collide_without_contact>\
-              <collide_without_contact_bitmask>1</collide_without_contact_bitmask>\
-              <collide_bitmask>1</collide_bitmask>\
-              <ode>\
-                <soft_cfm>0</soft_cfm>\
-                <soft_erp>0.2</soft_erp>\
-                <kp>1e+13</kp>\
-                <kd>1</kd>\
-                <max_vel>0.01</max_vel>\
-                <min_depth>0</min_depth>\
-              </ode>\
-              <bullet>\
-                <split_impulse>1</split_impulse>\
-                <split_impulse_penetration_threshold>-0.01</split_impulse_penetration_threshold>\
-                <soft_cfm>0</soft_cfm>\
-                <soft_erp>0.2</soft_erp>\
-                <kp>1e+13</kp>\
-                <kd>1</kd>\
-              </bullet>\
-            </contact>\
-          </surface>\
-       </collision>\
-     </link>\
-     <static>0</static>\
-     <allow_auto_disable>1</allow_auto_disable>\
-   </model>\
-   </sdf>";
-
-  spawn_model.request.model_xml = s.str();
-  spawn_model.request.robot_namespace = "";
-  geometry_msgs::Pose pose;
-  pose.position.x = xd;
-  pose.position.y = yd;
-  pose.position.z = zd;
-  pose.orientation.w = 1.0;
-  pose.orientation.x = pose.orientation.y = pose.orientation.z = 0;
-  spawn_model.request.initial_pose = pose;
-  spawn_model.request.reference_frame = "";
-  spawn_model_client.waitForExistence();
-
-  ROS_INFO("Result: %s, code %u", spawn_model.response.status_message.c_str(),
-           spawn_model.response.success);
-
-  checks = spawn_model_client.call(spawn_model);
+            </torsional>\
+          </friction>\
+          <bounce>\
+            <restitution_coefficient>0</restitution_coefficient>\
+            <threshold>1e+06</threshold>\
+          </bounce>\
+          <contact>\
+            <collide_without_contact>0</collide_without_contact>\
+            <collide_without_contact_bitmask>1</collide_without_contact_bitmask>\
+            <collide_bitmask>1</collide_bitmask>\
+            <ode>\
+              <soft_cfm>0</soft_cfm>\
+              <soft_erp>0.2</soft_erp>\
+              <kp>1e+13</kp>\
+              <kd>1</kd>\
+              <max_vel>0.01</max_vel>\
+              <min_depth>0</min_depth>\
+            </ode>\
+            <bullet>\
+              <split_impulse>1</split_impulse>\
+              <split_impulse_penetration_threshold>-0.01</split_impulse_penetration_threshold>\
+              <soft_cfm>0</soft_cfm>\
+              <soft_erp>0.2</soft_erp>\
+              <kp>1e+13</kp>\
+              <kd>1</kd>\
+            </bullet>\
+          </contact>\
+        </surface>\
+     </collision>\
+   </link>\
+   <static>0</static>\
+   <allow_auto_disable>1</allow_auto_disable>\
+ </model>\
+ </sdf>";
+    
+    spawn_model.request.model_xml=s.str();
+    spawn_model.request.robot_namespace = "";
+    geometry_msgs::Pose pose;
+    pose.position.x = xd; pose.position.y = yd; pose.position.z = zd;
+    pose.orientation.w = 1.0; pose.orientation.x = pose.orientation.y = pose.orientation.z = 0;
+    spawn_model.request.initial_pose = pose;
+    spawn_model.request.reference_frame = "";
+    spawn_model_client.waitForExistence();
+    
 }
 
-void Collect::remove_ob(char *name) {
+void Collect::remove_ob(char* name)
+{
+  ros::NodeHandle nh;
   ros::service::waitForService("gazebo/delete_model");
-  delete_model_client = nh.serviceClient<gazebo_msgs::DeleteModel>(
-      "gazebo/delete_model");
+  delete_model_client = nh.serviceClient<gazebo_msgs::DeleteModel>("gazebo/delete_model");
   gazebo_msgs::DeleteModel delete_model;
   delete_model.request.model_name = name;
+      
+        checkr = delete_model_client.call(delete_model);
 
-  checkr = delete_model_client.call(delete_model);
 }

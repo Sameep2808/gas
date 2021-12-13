@@ -20,11 +20,24 @@
 /// @param argv
 /// @return
 int main(int argc, char **argv) {
-  ros::init(argc, argv, "gas");
-  ros::NodeHandle nh;
-  Traverse tr(nh);
-  tr.move_next();
-  ROS_INFO_STREAM("Completed navigation!");
+
+    ros::init(argc, argv, "main");
+    ros::NodeHandle nh;
+    char* name = "box1";
+    double x_d ;
+    double y_d ;
+    double z_d ;
+    int c = 1;
+    
+    x_d = atoll(argv[1]);
+    y_d = atoll(argv[2]);
+
+    Collect col;
+    col.spawn(name, x_d, y_d, 0, c);
+    Traverse tr(nh) ;
+    tr.move_next();
+    ROS_INFO_STREAM("Completed navigation!");
+
 
   while (ros::ok()) {
     ros::spinOnce();
