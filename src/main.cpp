@@ -14,6 +14,11 @@
 #include "collect.hpp"
 #include "detection.hpp"
 
+/// @brief Main function to run the program
+///
+/// @param argc
+/// @param argv
+/// @return
 int main(int argc, char **argv) {
   ros::init(argc, argv, "gas");
   ros::NodeHandle nh;

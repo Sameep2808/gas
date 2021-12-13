@@ -134,7 +134,6 @@ void Collect::spawn(char *name, double xd, double yd, double zd, int c) {
 
   spawn_model.request.model_xml = s.str();
   spawn_model.request.robot_namespace = "";
-  // geometry_msgs::Pose pose;
   pose.position.x = xd;
   pose.position.y = yd;
   pose.position.z = zd;

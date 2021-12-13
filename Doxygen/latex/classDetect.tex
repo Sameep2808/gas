@@ -1,0 +1,195 @@
+\hypertarget{classDetect}{}\doxysection{Detect Class Reference}
+\label{classDetect}\index{Detect@{Detect}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classDetect_ad10db3464251e082874082393b38d0ad}{Detect}} (ros\+::\+Node\+Handle)
+\begin{DoxyCompactList}\small\item\em Constructor of class \mbox{\hyperlink{classDetect}{Detect}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classDetect_a025833a90666a418a1f68e333d8cfa5d}{process\+\_\+image\+\_\+callback}} (const sensor\+\_\+msgs\+::\+Image img)
+\begin{DoxyCompactList}\small\item\em Callback function when camera topic subscribed. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classDetect_a461df44268000817d40c74c552aad905}{Laser\+Callback}} (const sensor\+\_\+msgs\+::\+Laser\+Scan\+::\+Const\+Ptr \&msg)
+\begin{DoxyCompactList}\small\item\em Callback function when laser topic subscribed. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classDetect_af15081d6d2ab6390cc698a67e44d37d5}{odom\+Callback}} (const nav\+\_\+msgs\+::\+Odometry\+::\+Const\+Ptr \&msg)
+\begin{DoxyCompactList}\small\item\em Callback function when odometry topic subscribed. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classDetect_a039db6b06506a8b7b11ffb8d2c26b6a9}{drive\+\_\+robot}} (float lin\+\_\+x, float ang\+\_\+z)
+\begin{DoxyCompactList}\small\item\em function to drive the robot \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classDetect_a81d42dc816cc50a6f43894396fa36f89}{startdetect}} ()
+\begin{DoxyCompactList}\small\item\em Function that starts detection. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classDetect_ae0da1097b04320ce615847d67d07b629}{spot\+\_\+image}} (cv\+::\+Mat im)
+\begin{DoxyCompactList}\small\item\em Function to find if red color is spotted. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classDetect_a4721c0f6784ef67d1a4559bd5d064a80}{robot\+\_\+motion}} (cv\+::\+Mat im)
+\begin{DoxyCompactList}\small\item\em Function to control robot motion. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classDetect_a4c767cf07d74356bcc6c275149f5232b}\label{classDetect_a4c767cf07d74356bcc6c275149f5232b}} 
+double {\bfseries laser\+\_\+dist}
+\item 
+\mbox{\Hypertarget{classDetect_a76b91d6ce4cacdf7519664b9590203b8}\label{classDetect_a76b91d6ce4cacdf7519664b9590203b8}} 
+bool {\bfseries aligned}
+\item 
+\mbox{\Hypertarget{classDetect_a8cf54c87c35cbd07bd1538d10d241f9d}\label{classDetect_a8cf54c87c35cbd07bd1538d10d241f9d}} 
+bool {\bfseries get\+\_\+dist}
+\item 
+\mbox{\Hypertarget{classDetect_a56ba3b412a233ef53668fe670cb375f2}\label{classDetect_a56ba3b412a233ef53668fe670cb375f2}} 
+double {\bfseries pos\+\_\+x}
+\item 
+\mbox{\Hypertarget{classDetect_a4c04afa6561cd2073dd6ab75ef2acd40}\label{classDetect_a4c04afa6561cd2073dd6ab75ef2acd40}} 
+double {\bfseries pos\+\_\+y}
+\item 
+\mbox{\Hypertarget{classDetect_a2b8472e779205ea4bd6650fa018b8575}\label{classDetect_a2b8472e779205ea4bd6650fa018b8575}} 
+double {\bfseries orientation}
+\item 
+\mbox{\Hypertarget{classDetect_a84f4b056cec22fcba9f5f035edb16852}\label{classDetect_a84f4b056cec22fcba9f5f035edb16852}} 
+int {\bfseries rotate}
+\item 
+\mbox{\Hypertarget{classDetect_a9775315f7701a5742e5075234985a000}\label{classDetect_a9775315f7701a5742e5075234985a000}} 
+int {\bfseries out}
+\item 
+\mbox{\Hypertarget{classDetect_a4e1b48da9b6cfa8e044893dfd955f90e}\label{classDetect_a4e1b48da9b6cfa8e044893dfd955f90e}} 
+bool {\bfseries spotted}
+\item 
+\mbox{\Hypertarget{classDetect_aa25e57344ca86bfc2f19af0402a99b01}\label{classDetect_aa25e57344ca86bfc2f19af0402a99b01}} 
+std\+::vector$<$ int $>$ {\bfseries pos}
+\item 
+\mbox{\Hypertarget{classDetect_a2716105e15fdeb36b45d02e5cfa4e0ee}\label{classDetect_a2716105e15fdeb36b45d02e5cfa4e0ee}} 
+ros\+::\+Subscriber {\bfseries camsub}
+\item 
+\mbox{\Hypertarget{classDetect_a27032ab88e70710d3123b94d221fe686}\label{classDetect_a27032ab88e70710d3123b94d221fe686}} 
+ros\+::\+Subscriber {\bfseries scansub}
+\item 
+\mbox{\Hypertarget{classDetect_ac0959d9917f443ef552bc97557e1cfed}\label{classDetect_ac0959d9917f443ef552bc97557e1cfed}} 
+ros\+::\+Subscriber {\bfseries odomsub}
+\item 
+\mbox{\Hypertarget{classDetect_a646b947350a3124b3bc97710a355d068}\label{classDetect_a646b947350a3124b3bc97710a355d068}} 
+ros\+::\+Publisher {\bfseries motorpub}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classDetect_ad10db3464251e082874082393b38d0ad}\label{classDetect_ad10db3464251e082874082393b38d0ad}} 
+\index{Detect@{Detect}!Detect@{Detect}}
+\index{Detect@{Detect}!Detect@{Detect}}
+\doxysubsubsection{\texorpdfstring{Detect()}{Detect()}}
+{\footnotesize\ttfamily Detect\+::\+Detect (\begin{DoxyParamCaption}\item[{ros\+::\+Node\+Handle}]{nh }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Constructor of class \mbox{\hyperlink{classDetect}{Detect}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ros\+::\+Node\+Handle} & nh \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classDetect_a039db6b06506a8b7b11ffb8d2c26b6a9}\label{classDetect_a039db6b06506a8b7b11ffb8d2c26b6a9}} 
+\index{Detect@{Detect}!drive\_robot@{drive\_robot}}
+\index{drive\_robot@{drive\_robot}!Detect@{Detect}}
+\doxysubsubsection{\texorpdfstring{drive\_robot()}{drive\_robot()}}
+{\footnotesize\ttfamily void Detect\+::drive\+\_\+robot (\begin{DoxyParamCaption}\item[{float}]{lin\+\_\+x,  }\item[{float}]{ang\+\_\+z }\end{DoxyParamCaption})}
+
+
+
+function to drive the robot 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lin\+\_\+x} & \\
+\hline
+{\em ang\+\_\+z} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classDetect_a461df44268000817d40c74c552aad905}\label{classDetect_a461df44268000817d40c74c552aad905}} 
+\index{Detect@{Detect}!LaserCallback@{LaserCallback}}
+\index{LaserCallback@{LaserCallback}!Detect@{Detect}}
+\doxysubsubsection{\texorpdfstring{LaserCallback()}{LaserCallback()}}
+{\footnotesize\ttfamily void Detect\+::\+Laser\+Callback (\begin{DoxyParamCaption}\item[{const sensor\+\_\+msgs\+::\+Laser\+Scan\+::\+Const\+Ptr \&}]{msg }\end{DoxyParamCaption})}
+
+
+
+Callback function when laser topic subscribed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classDetect_af15081d6d2ab6390cc698a67e44d37d5}\label{classDetect_af15081d6d2ab6390cc698a67e44d37d5}} 
+\index{Detect@{Detect}!odomCallback@{odomCallback}}
+\index{odomCallback@{odomCallback}!Detect@{Detect}}
+\doxysubsubsection{\texorpdfstring{odomCallback()}{odomCallback()}}
+{\footnotesize\ttfamily void Detect\+::odom\+Callback (\begin{DoxyParamCaption}\item[{const nav\+\_\+msgs\+::\+Odometry\+::\+Const\+Ptr \&}]{msg }\end{DoxyParamCaption})}
+
+
+
+Callback function when odometry topic subscribed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classDetect_a025833a90666a418a1f68e333d8cfa5d}\label{classDetect_a025833a90666a418a1f68e333d8cfa5d}} 
+\index{Detect@{Detect}!process\_image\_callback@{process\_image\_callback}}
+\index{process\_image\_callback@{process\_image\_callback}!Detect@{Detect}}
+\doxysubsubsection{\texorpdfstring{process\_image\_callback()}{process\_image\_callback()}}
+{\footnotesize\ttfamily void Detect\+::process\+\_\+image\+\_\+callback (\begin{DoxyParamCaption}\item[{const sensor\+\_\+msgs\+::\+Image}]{img }\end{DoxyParamCaption})}
+
+
+
+Callback function when camera topic subscribed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em img} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classDetect_a4721c0f6784ef67d1a4559bd5d064a80}\label{classDetect_a4721c0f6784ef67d1a4559bd5d064a80}} 
+\index{Detect@{Detect}!robot\_motion@{robot\_motion}}
+\index{robot\_motion@{robot\_motion}!Detect@{Detect}}
+\doxysubsubsection{\texorpdfstring{robot\_motion()}{robot\_motion()}}
+{\footnotesize\ttfamily void Detect\+::robot\+\_\+motion (\begin{DoxyParamCaption}\item[{cv\+::\+Mat}]{im }\end{DoxyParamCaption})}
+
+
+
+Function to control robot motion. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em im} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classDetect_ae0da1097b04320ce615847d67d07b629}\label{classDetect_ae0da1097b04320ce615847d67d07b629}} 
+\index{Detect@{Detect}!spot\_image@{spot\_image}}
+\index{spot\_image@{spot\_image}!Detect@{Detect}}
+\doxysubsubsection{\texorpdfstring{spot\_image()}{spot\_image()}}
+{\footnotesize\ttfamily void Detect\+::spot\+\_\+image (\begin{DoxyParamCaption}\item[{cv\+::\+Mat}]{im }\end{DoxyParamCaption})}
+
+
+
+Function to find if red color is spotted. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em im} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classDetect_a81d42dc816cc50a6f43894396fa36f89}\label{classDetect_a81d42dc816cc50a6f43894396fa36f89}} 
+\index{Detect@{Detect}!startdetect@{startdetect}}
+\index{startdetect@{startdetect}!Detect@{Detect}}
+\doxysubsubsection{\texorpdfstring{startdetect()}{startdetect()}}
+{\footnotesize\ttfamily void Detect\+::startdetect (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Function that starts detection. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{detection_8hpp}{detection.\+hpp}}\item 
+src/\mbox{\hyperlink{detection_8cpp}{detection.\+cpp}}\end{DoxyCompactItemize}

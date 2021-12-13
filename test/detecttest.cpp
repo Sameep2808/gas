@@ -3,52 +3,17 @@
 #include "detection.hpp"
 #include "collect.hpp"
 
+ /// @brief Test for contructor
+ ///
 TEST(TestDetection1, constructor_test) {
 	ros::NodeHandle nc;
 	Detect dete(nc);
 	EXPECT_TRUE(!dete.spotted);
 	EXPECT_EQ(dete.out,0); 
 }
-/*
-// Test to check laser
-TEST(Testlaser, testlaser) {
-	// initialise the test object
-	ros::NodeHandle nh;
-	//  Create a publisher on the topic
-	Detect det(nh);
-	det.aligned = true;
-	int a=10;
-	ros::Subscriber scansub = nh.subscribe<sensor_msgs::LaserScan>("/scan", 1, &Detect::LaserCallback, &det);
-	while (a>0){
-	ros::spinOnce();
-	a--;
-	}
-	EXPECT_TRUE(!det.get_dist);
-	ros::Duration(10).sleep();
-	Collect c;
-	c.spawn("box1",4,0,0,1);
-}
 
-// Test to check laser
-TEST(Testlaserf, testlaserf) {
-	// initialise the test object
-	ros::NodeHandle nh;
-	//  Create a publisher on the topic
-	
-	Detect det(nh);
-	det.aligned = true;
-	int a=20;
-	ros::Subscriber scansub = nh.subscribe<sensor_msgs::LaserScan>("/scan", 1, &Detect::LaserCallback, &det);
-	while (a>0){
-	ROS_INFO("DISTANCE OF OBJECT AFTER ALIGNMENT: %lf", det.laser_dist);
-	ros::spinOnce();
-	a--;
-	}
-	EXPECT_TRUE(det.get_dist);
-	ros::Duration(10).sleep();
-}
-*/
-
+/// @brief Test for laser
+///
 TEST(Testlaser, testlaser) {
 	// initialise the test object
 	ros::NodeHandle nh;
@@ -60,8 +25,8 @@ TEST(Testlaser, testlaser) {
 	EXPECT_NO_FATAL_FAILURE(scansub);
 }
 
-
-// Test to spot red color in image
+/// @brief Test to spot red color in image
+///
 TEST(TestDetection2, reddetection) {
   ros::NodeHandle nh;
   Detect dete(nh);
@@ -71,7 +36,8 @@ TEST(TestDetection2, reddetection) {
   EXPECT_TRUE(!dete.spotted);
 }
 
-// Test to get the location of red color
+/// @brief Test to get the location of red color
+///
 TEST(TestDetection3, reddetectionloc) {
   ros::NodeHandle n;
   Detect det(n);
@@ -84,7 +50,8 @@ TEST(TestDetection3, reddetectionloc) {
   EXPECT_TRUE(!det.spotted);
 }
 
-// Test to check if robot is rotating once on no object found
+/// @brief Test to check if robot is rotating once on no object found
+///
 TEST(TestDetection4, checkrot) {
    ros::NodeHandle ns;
    Detect de(ns);
@@ -93,8 +60,9 @@ TEST(TestDetection4, checkrot) {
    de.startdetect();
    EXPECT_EQ(de.rotate,70); 
 }
-      
-// Test to check publisher of robot
+
+/// @brief Test to check publisher of robot
+///
 TEST(Testpub, teststartdetect) {
 	geometry_msgs::Twist msg;
 	msg.linear.x = 1.0;
@@ -116,23 +84,5 @@ TEST(Testpub, teststartdetect) {
 	ros::Duration(10).sleep();
 	EXPECT_EQ(1, motorpub.getNumSubscribers());
 }
-
-/*
-TEST(Testdrive, drive_test) {
-	ros::NodeHandle nd;
-	Detect det(nd);
-	det.drive_robot(0,0);
-	EXPECT_TRUE(true);
-}*/
-/*
-TEST(robot_motion1, robot_motion_test) {
-	ros::NodeHandle nd;
-	Detect det(nd);
-	cv::Mat img;
-   	img = cv::imread("/black.jpg");
-	det.robot_motion(img);
-	EXPECT_EQ(0,det.out);
-}
-*/
 
 

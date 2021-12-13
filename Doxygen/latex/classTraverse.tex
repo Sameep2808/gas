@@ -1,0 +1,107 @@
+\hypertarget{classTraverse}{}\doxysection{Traverse Class Reference}
+\label{classTraverse}\index{Traverse@{Traverse}}
+
+
+This is a \mbox{\hyperlink{classTraverse}{Traverse}} class whose function is to make the robot traverse through the map to find the targeted object.  
+
+
+
+
+{\ttfamily \#include $<$Traverse.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classTraverse_a3eb071001e1e70a07e6f419fa9a4dd94}{Traverse}} (ros\+::\+Node\+Handle)
+\begin{DoxyCompactList}\small\item\em Constructor for class \mbox{\hyperlink{classTraverse}{Traverse}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classTraverse_a09502272f0fb3b2b941d2933bb50955e}{move\+\_\+next}} ()
+\begin{DoxyCompactList}\small\item\em Function to travserse the robot in a trajectory. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classTraverse_ad1302d79a8e22def80c8009745711949}{to\+\_\+goal}} (double x, double y)
+\begin{DoxyCompactList}\small\item\em Method to navigate robot to a x,y coordinates on map. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classTraverse_a4a65a66bedbf2fbfabec0aec5e91ab60}\label{classTraverse_a4a65a66bedbf2fbfabec0aec5e91ab60}} 
+void \mbox{\hyperlink{classTraverse_a4a65a66bedbf2fbfabec0aec5e91ab60}{reach\+\_\+bill}} ()
+\begin{DoxyCompactList}\small\item\em Reach the billing site. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classTraverse_ad1991f0fa6edca4b923d1b5af3afbb0c}\label{classTraverse_ad1991f0fa6edca4b923d1b5af3afbb0c}} 
+bool {\bfseries status}
+\item 
+\mbox{\Hypertarget{classTraverse_a985a79b82ec294eac76484f691ea5c03}\label{classTraverse_a985a79b82ec294eac76484f691ea5c03}} 
+double {\bfseries bill\+\_\+x}
+\item 
+\mbox{\Hypertarget{classTraverse_aa8c9e4237df1531b6a4b46e030991ea6}\label{classTraverse_aa8c9e4237df1531b6a4b46e030991ea6}} 
+double {\bfseries bill\+\_\+y}
+\item 
+\mbox{\Hypertarget{classTraverse_a9ce6361de8e45bcada0ab071e434b643}\label{classTraverse_a9ce6361de8e45bcada0ab071e434b643}} 
+std\+::vector$<$ double $>$ {\bfseries X} = \{ -\/2.\+29, -\/5.\+1, 1.\+184, -\/5, 5.\+35, 4.\+221 \}
+\item 
+\mbox{\Hypertarget{classTraverse_a17c733c8ed43521742577cc2b9a73f4c}\label{classTraverse_a17c733c8ed43521742577cc2b9a73f4c}} 
+std\+::vector$<$ double $>$ {\bfseries Y} = \{ 1.\+2336, -\/2.\+21, 3.\+31, 8.\+6, 3, 9 \}
+\item 
+\mbox{\Hypertarget{classTraverse_adfd607466c5167fd9a0e9ffc1bceacfd}\label{classTraverse_adfd607466c5167fd9a0e9ffc1bceacfd}} 
+std\+::vector$<$ double $>$ {\bfseries Z} = \{ -\/0.\+707, 0.\+7071, -\/1, -\/0.\+7071, 0.\+7071, -\/0.\+7071 \}
+\item 
+\mbox{\Hypertarget{classTraverse_a6e0d07586e25e043816743a82b7c49ca}\label{classTraverse_a6e0d07586e25e043816743a82b7c49ca}} 
+std\+::vector$<$ double $>$ {\bfseries W} = \{ 0.\+707, 0.\+7071, 3.\+3, 0.\+7071, 0.\+7071, 0.\+7071 \}
+\item 
+\mbox{\Hypertarget{classTraverse_add5b280d8797055023bdbbe2f02fab59}\label{classTraverse_add5b280d8797055023bdbbe2f02fab59}} 
+std\+::vector$<$ move\+\_\+base\+\_\+msgs\+::\+Move\+Base\+Goal $>$ {\bfseries goals}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This is a \mbox{\hyperlink{classTraverse}{Traverse}} class whose function is to make the robot traverse through the map to find the targeted object. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classTraverse_a3eb071001e1e70a07e6f419fa9a4dd94}\label{classTraverse_a3eb071001e1e70a07e6f419fa9a4dd94}} 
+\index{Traverse@{Traverse}!Traverse@{Traverse}}
+\index{Traverse@{Traverse}!Traverse@{Traverse}}
+\doxysubsubsection{\texorpdfstring{Traverse()}{Traverse()}}
+{\footnotesize\ttfamily Traverse\+::\+Traverse (\begin{DoxyParamCaption}\item[{ros\+::\+Node\+Handle}]{nh }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Constructor for class \mbox{\hyperlink{classTraverse}{Traverse}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ros\+::\+Node\+Handle} & \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classTraverse_a09502272f0fb3b2b941d2933bb50955e}\label{classTraverse_a09502272f0fb3b2b941d2933bb50955e}} 
+\index{Traverse@{Traverse}!move\_next@{move\_next}}
+\index{move\_next@{move\_next}!Traverse@{Traverse}}
+\doxysubsubsection{\texorpdfstring{move\_next()}{move\_next()}}
+{\footnotesize\ttfamily void Traverse\+::move\+\_\+next (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Function to travserse the robot in a trajectory. 
+
+\mbox{\Hypertarget{classTraverse_ad1302d79a8e22def80c8009745711949}\label{classTraverse_ad1302d79a8e22def80c8009745711949}} 
+\index{Traverse@{Traverse}!to\_goal@{to\_goal}}
+\index{to\_goal@{to\_goal}!Traverse@{Traverse}}
+\doxysubsubsection{\texorpdfstring{to\_goal()}{to\_goal()}}
+{\footnotesize\ttfamily void Traverse\+::to\+\_\+goal (\begin{DoxyParamCaption}\item[{double}]{x,  }\item[{double}]{y }\end{DoxyParamCaption})}
+
+
+
+Method to navigate robot to a x,y coordinates on map. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & x-\/coordinate \\
+\hline
+{\em y} & y-\/coordinate \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{Traverse_8h}{Traverse.\+h}}\item 
+src/\mbox{\hyperlink{Traverse_8cpp}{Traverse.\+cpp}}\end{DoxyCompactItemize}

@@ -23,8 +23,6 @@ Detect::Detect(ros::NodeHandle nh) {
   n = nh;
   rotate = 0;
   out = 0;
-  // bill_x = 0.452;
-  // bill_y = -1.0;
   spotted = false;
   pos = { };
 }
