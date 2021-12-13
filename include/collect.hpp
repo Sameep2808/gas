@@ -37,6 +37,9 @@ class Collect {
 
   // the Service Client that activates delete_model_client
   ros::ServiceClient delete_model_client;
+  
+  // geometry msgs to store position
+  geometry_msgs::Pose pose;
 
  public:
   bool checkr = false;

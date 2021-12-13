@@ -15,7 +15,7 @@
 ///
 TEST(spawnr, test_gas_constructor) {
 	Collect c;
-	c.spawn("box1",0,0,0,1);
+	c.spawn("box1",0,4,0,1);
 	EXPECT_TRUE(c.checks);
 }
 
@@ -23,7 +23,7 @@ TEST(spawnr, test_gas_constructor) {
 ///
 TEST(spawng, test_gas_constructor) {
 	Collect c;
-	c.spawn("box1",0,0,0,2);
+	c.spawn("box2",0,3,0,2);
 	EXPECT_TRUE(c.checks);
 }
 
@@ -31,7 +31,7 @@ TEST(spawng, test_gas_constructor) {
 ///
 TEST(spawnb, test_gas_constructor) {
 	Collect c;
-	c.spawn("box1",0,0,0,3);
+	c.spawn("box4",0,5,0,3);
 	EXPECT_TRUE(c.checks);
 }
 
