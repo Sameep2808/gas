@@ -19,7 +19,7 @@ void Collect::spawn(char *name, double xd, double yd, double zd, int c) {
 
   std::ifstream ifs;
   std::stringstream s;\
-  s << R"(<?xml version='1.0'?>\
+  s << "<?xml version='1.0'?>\
       <sdf version='1.7'>\
       <model name='Box1'>\
         <link name='link_0'>\
@@ -48,7 +48,7 @@ void Collect::spawn(char *name, double xd, double yd, double zd, int c) {
           <uri>file://media/materials/scripts/gazebo.material</uri>\
           <name>Gazebo/Grey</name>\
         </script>\
-        <shader type='pixel'/>)";
+        <shader type='pixel'/>";
 
   if (c == 1) {
     s << "<ambient>1 0 0 1</ambient>\
@@ -134,6 +134,7 @@ void Collect::spawn(char *name, double xd, double yd, double zd, int c) {
 
   spawn_model.request.model_xml = s.str();
   spawn_model.request.robot_namespace = "";
+  geometry_msgs::Pose pose;
   pose.position.x = xd;
   pose.position.y = yd;
   pose.position.z = zd;

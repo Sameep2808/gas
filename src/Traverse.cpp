@@ -94,7 +94,7 @@ void Traverse::reach_bill() {
   status = ac.waitForResult();
   ROS_INFO_STREAM("Reached near bill");
   Collect c;
-  c.spawn("Ghe mc", 0.452, -0.25, 2.5, 1);
+  c.spawn("Target", 0.452, -0.25, 2.5, 1);
 
   ROS_INFO_STREAM("Task completed. Killing now!");
 
