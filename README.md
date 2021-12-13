@@ -46,19 +46,27 @@ The following proposal proposes a ROS package which simulates a pickup and place
 Our robot’s technology is divided into two parts:
 
 - Navigation and Obstacle Avoidance: The aim of this aspect is
-to navigate the robot using LiDAR and localization. Using this, the robot will autonomously navigate itself
-to find the targeted location.LiDAR sensor is used to detect the
-robot’s surroundings. It creates a Laser scan map around the robot and using this generated map, decides to continue on its
-planned path or change its path.
+to navigate the robot using LiDAR and AMCL ROS package. Using this, the robot will autonomously navigate itself
+to find the targeted location.It creates a Laser scan map around the robot and using this generated map, decides to continue on its
+planned path or change its path.We have used ROS move_base package to traverse the robot to desired location.
 
-- Object Identification: The camera on robot is used to identify objects using HSV colour space. Every object has an unique colour and the robot will identify the object based on it's colour and then call a rosservice to pick up the object.
+- Object Identification: The camera on robot is used to identify objects. Every object has an unique colour and the robot will identify the object based on it's colour and then call a rosservice to pick up the object.Once the object is detected the robot uses Lidar to align and starts to move towards the object.
+
+- Object Spawning: The objects are spawned at random location in the arena.Once the object is detected and the robot reaches near the object disappears from the arena.The robot starts to traverse towards the billing location.When the robot reaches the billing location the object spawns at the billing location.    
+
+## Activity Diagram
+![Screenshot from 2021-12-13 14-04-06](https://user-images.githubusercontent.com/77606010/145872861-ced46e77-77fb-4e37-a965-6270dfcbab2e.png)
+
+## Class UML Diagram
+![Screenshot from 2021-12-13 14-03-53](https://user-images.githubusercontent.com/77606010/145872958-6757e784-b208-4b5f-a9c7-11762dd2be40.png)
+
 
 ## Dependencies and Technologies used
 
 - Programming language : C++
 - Build system : catkin_make
-- Operating System : Ubuntu 18.04/20.04
-- Libraries: OpenCV, cmath, cv_bridge, actionlib
+- Operating System : Ubuntu 20.04
+- Packages : OpenCV, sensor_msgs, gazebo_msgs, cv_bridge, move_base, turtlebot3 package
 
 ## Risks and Mitigation
 
@@ -89,6 +97,18 @@ a predefined checklist.
 ## Working
 ![gif](https://user-images.githubusercontent.com/77606010/145767290-c55dae8e-2dfe-49f5-92b8-2136d36f49ad.gif)
 
+## Downloading the turtlebot3 package 
+1. In new terminal
+```
+cd ~/catkin_ws/src/
+git clone https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
+git clone https://github.com/ROBOTIS-GIT/turtlebot3.git
+cd ~/catkin_ws && catkin_make
+cd ~/catkin_ws/src/
+git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
+cd ~/catkin_ws && catkin_make
+```
+
 ## Steps to Build package
 1. Create Catkin Workspace
 ```
@@ -103,29 +123,33 @@ catkin_make clean && catkin_make
 source ./devel/setup.bash
 ```
 ## Steps to Run package
-1. Make sure Roscore is running
-```
-roscore
-```
-
-2. Make sure you have sourced setup file
+1. Make sure you have sourced setup file
 ```
 cd ~/catkin_ws
 source ./devel/setup.bash
 ```
 
-3. To run the package 
+2. To run the package 
 ```
 roslaunch gas navigation.launch
 ```
 
-4. To spawn the object at any location in map 
+3. To run the package spawn the object at any location in map 
 ```
 roslaunch gas navigation.launch x_d:=4 y_d:=3
 ```
 
+4. To run the tests for package 
+```
+catkin_make run_tests_gas_rostest_test_test.launch
+catkin_make run_tests_gas_rostest_test_Traverse_test.launch
+```
+## Recording bag file
+```
+roslaunch gas navigation.launch record_gas:=true  # By default record is set false. Records bag for 10 seconds
+```
 
-## Building for code coverage (for assignments beginning in Week 4)
+## Building for code coverage
 ```
 sudo apt-get install lcov
 cmake -D COVERAGE=ON -D CMAKE_BUILD_TYPE=Debug ../
@@ -181,7 +205,7 @@ Select "boilerplate-eclipse" directory created previously as root directory -> F
 Source files may be edited under the "[Source Directory]" label in the Project Explorer.
 
 
-## #Build
+## Build
 
 To build the project, in Eclipse, unfold boilerplate-eclipse project in Project Explorer,
 unfold Build Targets, double click on "all" to build all projects.
@@ -215,6 +239,15 @@ debugger window.
 7. Press Terminate icon to terminate debugging and press C/C++ icon to switch back to C/C++ 
 perspetive view (or Windows->Perspective->Open Perspective->C/C++).
 
+## Future Plans 
+1. This is only a software demonstration we plan to make a working model.
+2. We plan to integrate depth sensors like kinect on the robot.
+3. We plan to make a swarm of collection robots.
+
+## Bugs
+1. Currently the tests are divided into two nodes because of rostest limitation of 60 seconds.
+2. Move_ base package waits and goes for more optimal path.
+3. Object Spawning has string inputs which has conflicts with ISO C++ standards this does not affect the performance of software.
 
 ### Plugins
 
