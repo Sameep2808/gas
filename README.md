@@ -1,13 +1,13 @@
-# GAS: The Autonomous Collection Robot
+# ![gas](https://user-images.githubusercontent.com/77606010/145761283-59a5ff5d-cba7-48b7-8d9a-9a24475aaf1b.png) The Autonomous Collection Robot
+## Badges
 [![Build Status](https://app.travis-ci.com/sameep989/gas.svg?branch=main)](https://app.travis-ci.com/sameep989/gas)
 [![Coverage Status](https://coveralls.io/repos/github/sameep989/gas/badge.svg?branch=main)](https://coveralls.io/github/sameep989/gas?branch=main)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ## Authors
-- [Gaurav Raut](https://github.com/gauraut) - M.Eng. Robotics student. I like to make puns.
+- [Gaurav Raut](https://github.com/gauraut) - M.Eng. Robotics student. I am interested in Computer Vision. I like rock music and anime.
 - [Advait Patole](https://github.com/advaitp) - Graduate student at University of Maryland pursuing M.Eng. Robotics. Likes rock music.
 - [Sameep Pote](https://github.com/Sameep2808) - Graduate student at University of Maryland pursuing M.Eng. Robotics.Loves to watch animes.
 ## License
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
 MIT License
 
 Copyright (c) 2021 Gaurav Raut, Advait Patole, Sameep Pote
@@ -56,7 +56,7 @@ planned path or change its path.
 - Programming language : C++
 - Build system : catkin_make
 - Operating System : Ubuntu 18.04/20.04
-- Libraries: OpenCV, Eigen, cmath, mlpack, cv_bridge, moveit
+- Libraries: OpenCV, cmath, cv_bridge, actionlib
 
 ## Risks and Mitigation
 
