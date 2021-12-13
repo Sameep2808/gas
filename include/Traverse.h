@@ -23,13 +23,16 @@ class Traverse {
 public:
 	Traverse(ros::NodeHandle);
 	void move_next();
-	std::vector<move_base_msgs::MoveBaseGoal> goals;
-	ros::Publisher goal_pub;
+	bool status;
+	void to_goal(double x, double y);
+	void reach_bill();
+	double bill_x;
+	double bill_y;
 	std::vector<double> X = {-2.29, -5.1, 1.184, -5, 5.35, 4.221};
 	std::vector<double> Y = {1.2336, -2.21, 3.31, 8.6, 3, 9};
 	std::vector<double> Z = {-0.707, 0.7071, -1, -0.7071, 0.7071, -0.7071};
 	std::vector<double> W = {0.707, 0.7071, 3.3, 0.7071, 0.7071, 0.7071};
-
+	std::vector<move_base_msgs::MoveBaseGoal> goals;
 	// std::vector<double> X = {-2.29, -5.075, -5.1, -2.072, 1.184, 1.066, -5, -5, 4.24, 5.35, 5.35, 4.221, 0};
 	// std::vector<double> Y = {1.2336, 1.15, -2.21, -2.072, 3.31, 8.8, 8.6, 3.612, 3, 3, 8.9, 9, 7.36};
 	// std::vector<double> Z = {-0.707, 3.53, 0.7071, 1, -1, -1, -0.7071, 3.5327, 2.83, 0.7071, -1, -0.7071, 1};

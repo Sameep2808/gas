@@ -1,6 +1,6 @@
 # GAS: The Autonomous Collection Robot
-[![Build Status](https://app.travis-ci.com/Sameep2808/gas.svg?branch=main)](https://app.travis-ci.com/Sameep2808/gas)
-[![Coverage Status](https://coveralls.io/repos/github/Sameep2808/gas/badge.svg?branch=master)](https://coveralls.io/github/Sameep2808/gas?branch=master)
+[![Build Status](https://app.travis-ci.com/sameep989/gas.svg?branch=main)](https://app.travis-ci.com/sameep989/gas)
+[![Coverage Status](https://coveralls.io/repos/github/sameep989/gas/badge.svg?branch=main)](https://coveralls.io/github/sameep989/gas?branch=main)
 ## Authors
 - [Gaurav Raut](https://github.com/gauraut) - M.Eng. Robotics student. I like to make puns.
 - [Advait Patole](https://github.com/advaitp) - Graduate student at University of Maryland pursuing M.Eng. Robotics. Likes rock music.

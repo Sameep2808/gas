@@ -136,9 +136,7 @@ void Collect::spawn(char* name,double xd, double yd, double zd, int c)
     spawn_model.request.reference_frame = "";
     spawn_model_client.waitForExistence();
     
-    if (!spawn_model_client.call(spawn_model)) {
-        ROS_ERROR("Failed to call service %s","gazebo/spawn_sdf_model");
-    }
+    
     ROS_INFO("Result: %s, code %u",spawn_model.response.status_message.c_str(), spawn_model.response.success);
     
     checks = spawn_model_client.call(spawn_model);
@@ -151,13 +149,12 @@ void Collect::remove_ob(char* name)
 	delete_model_client = nh.serviceClient<gazebo_msgs::DeleteModel>("gazebo/delete_model");
 	gazebo_msgs::DeleteModel delete_model;
 	delete_model.request.model_name = name;
-	if (!delete_model_client.call(delete_model)) {
-        ROS_ERROR("Failed to call service %s","gazebo/deleteModel");
+	
         
         checkr = delete_model_client.call(delete_model);
         
         
-    }
+    
 }
 
 

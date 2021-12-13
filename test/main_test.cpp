@@ -8,10 +8,10 @@
 
 #include <gtest/gtest.h>
 #include <ros/ros.h>
-#include <gas.hpp>
+
 
 int main(int argc, char **argv) {
-  ros::init(argc, argv, "gas_test_client");
+  ros::init(argc, argv, "test_gas");
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

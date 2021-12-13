@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.0.2)
 project(gas)
 
 ## Find catkin and any catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs genmsg message_generation tf rostest move_base_msgs cv_bridge sensor_msgs geometry_msgs nav_msgs)
+find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs message_generation tf rostest move_base_msgs cv_bridge sensor_msgs geometry_msgs nav_msgs gazebo_msgs)
 
 ## Generate messages in the 'msg' folder
 # add_message_files(
@@ -30,22 +30,26 @@ add_executable(collection src/collection.cpp)
 target_link_libraries(collection ${catkin_LIBRARIES})
 
 if (CATKIN_ENABLE_TESTING)
-  
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 --coverage")
   find_package(rostest REQUIRED)
   
   add_rostest_gtest(
-   ct 
-   test/test.launch  
+   test_gas 
+   test/test.launch
+   #test/detecttest.cpp 
+   test/Traverse_test.cpp 
    test/collect_test.cpp 
-   src/collect.cpp)
+   test/main_test.cpp 
+   src/collect.cpp
+   src/detection.cpp
+   src/Traverse.cpp)
 
   target_link_libraries(
-   ct 
-   ${catkin_LIBRARIES}
-   ${OpenCV_LIBS})
+   test_gas 
+   ${catkin_LIBRARIES})
   
   add_dependencies(
-    ct
+    test_gas
     main
     ${catkin_EXPORTED_TARGETS}
   )

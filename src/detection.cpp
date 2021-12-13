@@ -18,8 +18,7 @@
 
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 
-detect::detect(ros::NodeHandle nh) {
-	
+Detect::Detect(ros::NodeHandle nh) {
 	laser_dist = 0.0;
 	aligned = false;
 	get_dist = false;
@@ -29,64 +28,15 @@ detect::detect(ros::NodeHandle nh) {
 	n=nh;
 	rotate = 0;
 	out=0;
+	// bill_x = 0.452;
+	// bill_y = -1.0;
+	spotted = false;
+	pos={};
 }
 
-void detect::reach_bill() {
-    MoveBaseClient ac("move_base", true);
-    while(!ac.waitForServer(ros::Duration(5.0))) {
-    ROS_INFO("Waiting for the move_base action server to come up");
-	}
-	move_base_msgs::MoveBaseGoal cur_goal;
-	cur_goal.target_pose.header.frame_id = "map";
-       cur_goal.target_pose.header.stamp = ros::Time::now();
-   
-    double diff_x = 0.452;
-    double diff_y = -1.0;
-
-    cur_goal.target_pose.pose.position.x = diff_x;
-    cur_goal.target_pose.pose.position.y = diff_y;
-    cur_goal.target_pose.pose.orientation.z = 0.7118;
-    cur_goal.target_pose.pose.orientation.w = 0.70234;
-
-    ac.sendGoal(cur_goal);
-    ac.waitForResult();
-    ROS_INFO_STREAM("Reached near bill");
-    Collect c;
-    c.spawn("Ghe mc",0.452,-0.25,2.5,1);
-    
-    ROS_INFO_STREAM("Task completed. Killing now!");
-    
-    ros::shutdown();
-   }	
-
-void detect::to_goal(double x, double y) {
-    MoveBaseClient ac("move_base", true);
-    while(!ac.waitForServer(ros::Duration(5.0))) {
-    ROS_INFO("Waiting for the move_base action server to come up");
-	}
-	move_base_msgs::MoveBaseGoal cur_goal;
-	cur_goal.target_pose.header.frame_id = "map";
-    cur_goal.target_pose.header.stamp = ros::Time::now();
-
-    cur_goal.target_pose.pose.position.x = x;
-    cur_goal.target_pose.pose.position.y = y;
-    cur_goal.target_pose.pose.orientation.z = -0.7118;
-    cur_goal.target_pose.pose.orientation.w = 0.70234;
-
-    ac.sendGoal(cur_goal);
-    ac.waitForResult();
-    ROS_INFO_STREAM("Reached near object");
-    Collect c;
-    c.remove_ob("box1");
-    ROS_INFO_STREAM("Closed all sensors");
-    
-    reach_bill();
-    
-}
-
-void detect::drive_robot(float lin_x, float ang_z) {
+void Detect::drive_robot(float lin_x, float ang_z) {
     ROS_INFO("ROTATING THE CAR");
-    ros::Rate loop_rate(10) ;
+    ros::Rate loop_rate(10);
 
     geometry_msgs::Twist motor_command ;
     motor_command.linear.x = lin_x;
@@ -97,28 +47,30 @@ void detect::drive_robot(float lin_x, float ang_z) {
     loop_rate.sleep();
 }
 
-void detect::LaserCallback(const sensor_msgs::LaserScan::ConstPtr& msg) {
+void Detect::LaserCallback(const sensor_msgs::LaserScan::ConstPtr& msg) {
+	ROS_INFO("GETTING THE DISTANCE OF OBJECT AFTER ALIGNMENT");
 	if(aligned) {
 		double min_dist1 = 3.0;
 		double min_dist2 = 3.0;
 		double curr_dist1, curr_dist2;
 		ROS_INFO("GETTING THE DISTANCE OF OBJECT AFTER ALIGNMENT");
-		
-		
 		curr_dist1 = msg->ranges[359];
 		ROS_INFO("d1 = %f",curr_dist1);
-		if(curr_dist1 < 3){
+		
+		if(curr_dist1 < 3) {
 		get_dist = true;
 		laser_dist=curr_dist1;
-		ROS_INFO("DISTANCE OF OBJECT AFTER ALIGNMENT: %lf", laser_dist);}
-		else{
+		ROS_INFO("DISTANCE OF OBJECT AFTER ALIGNMENT: %lf", laser_dist);
+		}
+
+		else {
 		drive_robot(0.2, 0.0) ;
 		aligned=false;
 		}
 	}
 }
 
-void detect::odomCallback(const nav_msgs::Odometry::ConstPtr& msg) {
+void Detect::odomCallback(const nav_msgs::Odometry::ConstPtr& msg) {
 	if(get_dist) {
 		orientation = msg->pose.pose.orientation.z;
 		double inc_x = msg->pose.pose.position.x;
@@ -140,12 +92,67 @@ void detect::odomCallback(const nav_msgs::Odometry::ConstPtr& msg) {
 		ROS_INFO("POSITION Y OF OBJECT AFTER ALIGNMENT: %lf", pos_y);
 		ROS_INFO("TRAVERSING TO THE OBJECT");
 
-		to_goal(pos_x, pos_y);
+		Traverse tr(n);
+		tr.to_goal(pos_x, pos_y);
 
 	}
 }
 
-void detect::process_image_callback(const sensor_msgs::Image img) {	
+void Detect::spot_image(cv::Mat im) {
+	for(int i = 0 ; i < im.rows ; i++) {
+  		for(int j = 0 ; j < im.cols ; j++) {
+  			cv::Vec3b pixel = im.at<cv::Vec3b>(i, j) ;
+  			if(pixel.val[0] == 0 && pixel.val[1] == 0 && pixel.val[2] == 255) {
+  				spotted = true ;
+  				pos = {i, j} ;
+  				break;
+  			}
+  		}
+  	}
+}
+
+void Detect::robot_motion(cv::Mat im) {
+	if(!spotted && rotate < 70) {
+  		ROS_INFO("KEEP ROTATING OBJECT NOT SPOTTED YET");
+  		drive_robot(0.0, 0.8);
+  		rotate++;
+  		ROS_INFO_STREAM("ROBOT ROTATED TIMES: " << rotate);	
+	 }
+
+  	else if(spotted){
+  		ROS_INFO("SPOTTED STOP CURRENTLY");
+  		drive_robot(0.0, 0.0);
+  		int row = pos[0] ;
+	  	int col = pos[1] ;
+	  	
+	  	// GO LEFT
+		if(col < im.cols/3) {
+			ROS_INFO("Moving LEFT");
+			drive_robot(0.0, 0.3) ;
+		}
+
+		// GO STRAIGHT
+		else if(col < 2*im.cols/3 &&col > im.cols/3) {
+			ROS_INFO("Moving STRAIGHT");
+			aligned = true;
+			drive_robot(0.0, 0.0) ;
+		}
+
+		// GO RIGHT
+		else {
+			ROS_INFO("Moving RIGHT") ;
+			drive_robot(0.0, -0.3) ;
+		}
+	}
+
+  	else {
+  		drive_robot(0.0, 0);
+  		out=1;
+  		ROS_INFO_STREAM("POCHLO");
+  	}
+}
+
+void Detect::process_image_callback(const sensor_msgs::Image img) {	
 	if(!aligned) {
 		ROS_INFO("Starting process_image_callback if robot not aligned %d",rotate);
 		cv_bridge::CvImagePtr cv_ptr;
@@ -158,74 +165,20 @@ void detect::process_image_callback(const sensor_msgs::Image img) {
 		    return;
 	  	}
 
-	  	bool spotted = false;
-
-	  	std::vector<int> pos;
-	  	cv::Mat im = cv_ptr->image;
-	  	
-	  	for(int i = 0; i < im.rows; i++)
-	  	{
-	  		for(int j = 0 ; j < im.cols ; j++)
-	  		{
-	  			cv::Vec3b pixel = im.at<cv::Vec3b>(i, j);
-	  			if(pixel.val[0] == 0 && pixel.val[1] == 0 && pixel.val[2] == 255)
-	  			{
-	  				spotted = true ;
-	  				pos = {i, j} ;
-	  				break;
-	  			}
-	  		}
-	  	}
-
-	  	if(!spotted && rotate < 70) {
-	  		ROS_INFO("KEEP ROTATING OBJECT NOT SPOTTED YET");
-	  		drive_robot(0.0, 0.8);
-	  		rotate++;
-	  		ROS_INFO_STREAM("ROBOT ROTATED TIMES: " << rotate);	
-	  	}
-
-	  	else if(spotted){
-	  		ROS_INFO("SPOTTED STOP CURRENTLY");
-	  		drive_robot(0.0, 0.0);
-	  		int row = pos[0] ;
-		  	int col = pos[1] ;
-		  	
-			if(col < im.cols/3) {
-				ROS_INFO("Moving LEFT");
-				drive_robot(0.0, 0.3) ;
-			}
-
-			// GO STRAIGHT
-			else if(col < 2*im.cols/3 &&col > im.cols/3) {
-				ROS_INFO("Moving STRAIGHT");
-				aligned = true;
-				drive_robot(0.0, 0.0) ;
-			}
-
-			// GO RIGHT
-			else {
-				ROS_INFO("Moving RIGHT") ;
-				drive_robot(0.0, -0.3) ;
-			}
-	  	}
-
-	  	else {
-	  		drive_robot(0.0, 0);
-	  		out=1;
-	  		ROS_INFO_STREAM("POCHLO");
-	  		
-	  		
-	  	}
+	  	spotted = false ;
+	  	cv::Mat im = cv_ptr->image ;
+	  	spot_image(im) ;
+	  	robot_motion(im) ;
 	}
 }
 
-void detect::startdetect() {
+void Detect::startdetect() {
 	ROS_INFO("Starting detection node") ;
 	out=0;
 	rotate = 0;
-	camsub = n.subscribe("/camera/rgb/image_raw", 1, &detect::process_image_callback, this);
-	scansub = n.subscribe<sensor_msgs::LaserScan>("/scan", 1, &detect::LaserCallback, this);
-	odomsub = n.subscribe("odom", 1000, &detect::odomCallback, this);
+	camsub = n.subscribe("/camera/rgb/image_raw", 1, &Detect::process_image_callback, this);
+	scansub = n.subscribe<sensor_msgs::LaserScan>("/scan", 1, &Detect::LaserCallback, this);
+	odomsub = n.subscribe("odom", 1000, &Detect::odomCallback, this);
 	motorpub = n.advertise<geometry_msgs::Twist>("/cmd_vel", 2);
 	while(out==0) {
 		ros::spinOnce();

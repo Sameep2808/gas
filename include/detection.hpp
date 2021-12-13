@@ -12,7 +12,7 @@
 #include <move_base_msgs/MoveBaseAction.h>
 #include <actionlib/client/simple_action_client.h>
 
-class detect {
+class Detect {
 	public :
 		double laser_dist ;
 		bool aligned ;
@@ -20,22 +20,28 @@ class detect {
 		double pos_x;
 		double pos_y;
 		double orientation;
+		// double bill_x;
+		// double bill_y;
 		int rotate;
 		int out;
+		bool spotted;
+		std::vector<int> pos;
 		
 		ros::Subscriber camsub;
 	    ros::Subscriber scansub;
 	    ros::Subscriber odomsub;
 	    ros::Publisher motorpub;
 
-	    detect(ros::NodeHandle);
+	    Detect(ros::NodeHandle);
 	    void process_image_callback(const sensor_msgs::Image img);
 	    void LaserCallback(const sensor_msgs::LaserScan::ConstPtr& msg);
 	    void odomCallback(const nav_msgs::Odometry::ConstPtr& msg);
 	    void drive_robot(float lin_x, float ang_z) ;
 	    void startdetect();
-	    void to_goal(double x, double y);
-	    void reach_bill();
+	    // void to_goal(double x, double y);
+	    // void reach_bill();
+	    void spot_image(cv::Mat im);
+	    void robot_motion(cv::Mat im); 
 
 	private :
 		ros::NodeHandle n;
