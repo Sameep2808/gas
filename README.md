@@ -8,6 +8,7 @@
 - [Advait Patole](https://github.com/advaitp) - Graduate student at University of Maryland pursuing M.Eng. Robotics. Likes rock music.
 - [Sameep Pote](https://github.com/Sameep2808) - Graduate student at University of Maryland pursuing M.Eng. Robotics.Loves to watch animes.
 ## License
+```
 MIT License
 
 Copyright (c) 2021 Gaurav Raut, Advait Patole, Sameep Pote
@@ -29,6 +30,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+```
 
 ## AIP documents and links
 - Product and Iteration backlogs, Work logs - https://docs.google.com/spreadsheets/d/1KLyT2uEeI9b1TvwLfODoASXBfRGHRH0ggyx3o0lfnI0/edit?usp=sharing
@@ -87,17 +89,41 @@ a predefined checklist.
 ## Working
 ![gif](https://user-images.githubusercontent.com/77606010/145767290-c55dae8e-2dfe-49f5-92b8-2136d36f49ad.gif)
 
-## Standard install via command-line
+## Steps to Build package
+1. Create Catkin Workspace
+```
+cd ~/catkin_ws
+catkin_make clean && catkin_make
+```
+2. Copy the repository in src folder of catkin workspace
 ```
 git clone --recursive https://github.com/Sameep2808/gas.git
-cd <path to repository>
-mkdir build
-cd build
-cmake ..
-make
-Run tests: ./test/cpp-test
-Run program: ./app/shell-app
+cd ..
+catkin_make clean && catkin_make
+source ./devel/setup.bash
 ```
+## Steps to Run package
+1. Make sure Roscore is running
+```
+roscore
+```
+
+2. Make sure you have sourced setup file
+```
+cd ~/catkin_ws
+source ./devel/setup.bash
+```
+
+3. To run the package 
+```
+roslaunch gas navigation.launch
+```
+
+4. To spawn the object at any location in map 
+```
+roslaunch gas navigation.launch x_d:=4 y_d:=3
+```
+
 
 ## Building for code coverage (for assignments beginning in Week 4)
 ```
