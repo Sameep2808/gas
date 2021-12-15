@@ -4,6 +4,29 @@
 # OS X files
 .DS_Store
 
+*~
+.*sw?
+\#*
+.DS_Store
+
+*.rej
+*.orig
+
+*.pro
+/packages/rpm/doxygen.spec
+*.idb
+*.pdb
+
+/doxygen_docs
+/doxygen.tag
+/build*
+/qtools_docs
+/warnings.log
+
+tags
+
+.idea
+
 # Build artifacts
 build/
 
