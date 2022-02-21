@@ -7,6 +7,10 @@
 - [Gaurav Raut](https://github.com/gauraut) - M.Eng. Robotics student. I am interested in Computer Vision. I like rock music and anime.
 - [Advait Patole](https://github.com/advaitp) - Graduate student at University of Maryland pursuing M.Eng. Robotics. Likes rock music.
 - [Sameep Pote](https://github.com/Sameep2808) - Graduate student at University of Maryland pursuing M.Eng. Robotics.Loves to watch animes.
+
+## Working
+![gif](https://user-images.githubusercontent.com/77606010/145767290-c55dae8e-2dfe-49f5-92b8-2136d36f49ad.gif)
+
 ## License
 ```
 MIT License
@@ -95,8 +99,6 @@ the product manager of each other. The stakeholders and users
 will drive the product backlog and requirements. This suggests
 that the product backlog is a rather a live document rather than
 a predefined checklist.
-## Working
-![gif](https://user-images.githubusercontent.com/77606010/145767290-c55dae8e-2dfe-49f5-92b8-2136d36f49ad.gif)
 
 ## Downloading the turtlebot3 package 
 1. In new terminal
