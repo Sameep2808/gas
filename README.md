@@ -11,6 +11,14 @@
 ## Working
 ![gif](https://user-images.githubusercontent.com/77606010/145767290-c55dae8e-2dfe-49f5-92b8-2136d36f49ad.gif)
 
+## Hardware Implementation Prototype
+
+### Detecting warehouse
+![g1](https://github.com/Sameep2808/gas/blob/master/gif/1.gif)
+
+### Pickup Mechanism
+![g2](https://github.com/Sameep2808/gas/blob/master/gif/2.gif)
+
 ## License
 ```
 MIT License
